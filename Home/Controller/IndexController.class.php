@@ -29,7 +29,7 @@ class IndexController extends Controller {
                     } else {
                         cookie('certficate', $document['certficate']);
                     }
-                }else{
+                } else {
                     $this->error('未查询到你输入的报告信息!');
                 }
             }
