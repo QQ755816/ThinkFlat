@@ -1,0 +1,23 @@
+<form id="form-{:I('get.render')}" method="post" class="easyui-panel" data-options="fit:true,border:false" action="{:U('update','id='.I('get.id'))}">
+    <table class="form-table" cellpadding="0" cellspacing="0" style="width: 100%">
+        <tr>
+            <th style="width:80px"><span class="red">★</span>证书类型</th>
+            <td colspan="2"><input type="text" name="typename" class="easyui-textbox" style="width:100%" data-options="required:true" /></td>
+        </tr>
+    </table>
+</form>
+<script>
+    $(function () {
+        try {
+            var data = {$data};
+            data['pubdate'] = timestampformat(data['pubdate']);
+            $("#form-{:I('get.render')}").form('load', data);
+            $("#win-{:I('get.render')}").window('resize', {
+                width: 500,
+                height: 130
+            }).window('center');
+        } catch (e) {
+            $.messager.alert('Error', e.name + ": " + e.message, 'error');
+        }
+    })
+</script>
