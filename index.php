@@ -13,11 +13,16 @@
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 // 定义安全目录 安全文件
 define('DIR_SECURE_FILENAME', 'index.html');
+// 网站文件入口位置
+define('WEB_ROOT', dirname(__FILE__) . '/');
 // 开启调试模式
 define('APP_DEBUG',true);
 // 定义APP目录
 define('APP_PATH','./ThinkFlat/');
 // 绑定默认模块 不设置默认为Home
 define('BIND_MODULE','Home');
+// 运行缓存目录
+define('CACHE_MAIN', '../cache/');
+define('RUNTIME_PATH', CACHE_MAIN . 'runtime/');
 // 引入Thinkphp框架
 require '../../cgi-bin/ThinkPHP.php';
