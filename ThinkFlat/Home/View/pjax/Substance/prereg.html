@@ -47,7 +47,7 @@
             buttons: [
                 {extend: 'copy', className: 'dt_button'},
                 {extend: 'excel', className: 'dt_button'},
-                {extend: 'pdf', className: 'dt_button'}
+                {extend: 'pdf', className: 'dt_button'},
             ],
             responsive: true,
             "processing": true,
@@ -59,6 +59,14 @@
                 {"data": "office"},
                 {"data": "start_date"},
                 {"data": "salary"}
+            ],
+            columnDefs: [{
+                    targets: 4,
+                    render: function (data, type, row, meta) {
+                        return '<a type="button" class="btn btn-danger btn-sm btn-block" href="#" onclick=console.info(' + row.id + ') >删除</a>';
+                    }
+                },
+                {"orderable": false, "targets": 4},
             ],
             ajax: {
                 url: "/data.php",

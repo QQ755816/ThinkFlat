@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/Public/plugs/jquery-1.12.4.min.js" type="text/javascript"></script>
+    </head>
+    <style>
+        .row {
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        .row.tablegrid-warp{
+            margin: 0;
+        }
+        .row.tablegrid-warp .row{
+            margin: 0;
+        }
+    </style>
+    <body>
+        <div id="div"></div>
+        <table id="table">
+            <tr>
+                <td data-field="id">ID</td>
+                <td data-field="name">Name</td>
+                <td data-field="company">Company</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>James</td>
+                <td>CIRS</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>ZZQ</td>
+                <td>RUIXU</td>
+            </tr>
+        </table>
+    </body>
+</html>
+<script>
+    (function ($) {
+        //private method
+        function initialization(obj, options) {
+            console.info(options);
+            var wrapid = obj.attr('id') + '-wrap';
+            if (!options.header) {
+                $('#' + wrapid + '-header').remove();
+            } else {
+                $('#' + wrapid + '-header').addClass(options.headClass);
+            }
+            if (!options.footer) {
+                $('#' + wrapid + '-footer').remove();
+            } else {
+                $('#' + wrapid + '-footer').addClass(options.footerClass);
+            }
+            if (options.buttons.length) {
+                if (options.btnRender) {
+                    if ($('#' + wrapid + '-buttons').length == 0) {
+                        $('#' + wrapid + '-' + options.btnRender).append('<div id="' + wrapid + '-buttons" class="tablegrid-warp-buttons"></div>');
+                        $('#' + wrapid + '-' + options.btnRender).addClass(options.btnRenderClass);
+                    }
+                } else {
+                    $('#' + wrapid + '-header').append('<div id="' + wrapid + '-buttons" class="tablegrid-warp-buttons"></div>');
+                }
+                var btnBox = $('#' + wrapid + '-buttons');
+                $.each(options.buttons, function (index, button) {
+                    button.btnClass ? button.btnClass : button.btnClass = 'bt-default';
+                    var btn = $('<button class="btn ' + button.btnClass + '">' + button.name + '</button>');
+                    btnBox.append(btn);
+                    btn.bind('click', button.action);
+                })
+            }
+        }
+        function initwarp(obj, wrapid) {
+            obj.wrap('<div id="' + wrapid + '" class="row tablegrid-warp"></div>');
+            $('#' + wrapid).prepend('<div id="' + wrapid + '-header" class="row tablegrid-warp-header"></div><div id="' + wrapid + '-toolbar" class="row tablegrid-warp-toolbar"></div>');
+            obj.wrap('<div id="' + wrapid + '-grid" class="row tablegrid-warp-grid"></div>');
+            $('#' + wrapid).append('<div id="' + wrapid + '-footer" class="row tablegrid-warp-footer"></div>');
+            return obj;
+        }
+        function initrepale(obj, wrapid) {
+            obj.replaceWith('<div id="' + wrapid + '" class="row tablegrid-warp"></div>');
+            var _this = $('#' + wrapid);
+            _this.append('<div id="' + wrapid + '-header" class="row tablegrid-warp-header"></div><div id="' + wrapid + '-toolbar" class="row tablegrid-warp-toolbar"></div>');
+            _this.append('<div id="' + wrapid + '-grid" class="row tablegrid-warp-grid"><table id="' + obj.attr('id') + '"></table></div>');
+            _this.append('<div id="' + wrapid + '-footer" class="row tablegrid-warp-footer"></div>');
+            return $('#' + obj.attr('id'));
+        }
+        function initColumns(trs) {
+            var columns = [];
+            if (trs.length > 0) {
+                var cols = $(trs[0]).children('td,th');
+                $.each(cols, function (i, col) {
+                    var temp = {};
+                    if ($(col).data('field')) {
+                        temp.field = $(col).data('field').toLowerCase();
+                    } else {
+                        temp.field = $(col).text().toLowerCase();
+                    }
+                    if (temp.field) {
+                        if ($(col).data('label')) {
+                            temp.label = $(col).data('label');
+                        } else {
+                            temp.label = temp.field;
+                        }
+                        if ($(col).data('width')) {
+                            temp.width = $(col).data('width');
+                        } else {
+                            temp.width = 50;
+                        }
+                        if ($(col).data('center')) {
+                            temp.center = $(col).data('center');
+                        }
+                        if ($(col).data('formart')) {
+                            temp.center = $(col).data('formart');
+                        }
+                    }
+                    if (temp) {
+                        columns.push(temp);
+                    }
+                });
+            }
+            return columns;
+        }
+        function initDatas(columns, trs) {
+            var datas = [];
+            if (trs.length > 1) {
+                for (var i = 1; i < trs.length; i++) {
+                    var cols = $(trs[i]).children('td,th');
+                    datas[i - 1] = {};
+                    $.each(columns, function (k, column) {
+                        datas[i - 1][column['field']] = $(cols[k]).text();
+                    })
+                }
+            }
+            return datas;
+        }
+        //Public method
+        var methods = {
+            init: function (options) {
+                var data = this.data('tablegrid');
+                var settings = {
+                    header: true, //显示头部
+                    headClass: '', //头部样式
+                    footer: true, //显示表尾
+                    footerClass: '', //表尾样式
+                    pagination: false, //是否分页
+                    columns: [], //栏目
+                    response: false, //是否动态变化
+                    pagesize: [10, 25, 50, 100], //每页数量
+                    buttons: [], //自定义按钮
+                    btnRender: '',
+                    btnRenderClass: '',
+                    toolbar: [], //工具栏
+                };
+                var finalSetting = {};
+                var wrapid = this.attr('id') + '-wrap';
+                var _this = this;
+                if (this.is('table')) {
+                    _this = initwarp(this, wrapid);
+                    var tbody = _this.children('tbody');
+                    var trs = tbody.children('tr');
+                    var loadFromTable = {}
+                    var columns = initColumns(trs);
+                    loadFromTable.columns = columns;
+                    loadFromTable.datas = initDatas(columns, trs);
+                    var settings = $.extend(settings, loadFromTable);
+                } else {
+                    _this = initrepale(this, wrapid);
+                }
+                if (!data) {
+                    _this.data('tablegrid', {
+                        target: _this,
+                        tablegrid: true
+                    });
+
+                }
+                settings = $.extend(settings, options);
+                if (settings['columns'].length) {
+                    initialization(_this, settings);
+                } else {
+                    console.info("$('#" + _this.attr('id') + "') init: failed");
+                }
+                return _this;
+            },
+            destroy: function () {
+                var data = this.data('tablegrid');
+                if (data) {
+                    var wrapid = this.attr('id') + '-wrap';
+                    $('#' + wrapid).remove();
+                }
+            },
+            reposition: function () {
+                //...
+            },
+            show: function () {
+                //...
+            },
+            hide: function () {
+                //...
+            },
+            update: function (content) {
+                //...
+            }
+        };
+        $.fn.tablegrid = function (method) {
+            if (methods[method]) {
+                return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+            } else if (typeof method === 'object' || !method) {
+                return methods.init.apply(this, arguments);
+            } else {
+                $.error('Method ' + method + ' does not exist on jQuery.tablegrid');
+            }
+        };
+
+    })(jQuery);
+
+    $(function () {
+        $('#div').tablegrid();
+        $('#div').tablegrid('destroy');
+        function add() {
+            alert(123)
+        }
+        $('#table').tablegrid({
+            buttons: [
+                {name: 'Add', btnClass: 'btn-success', action: add}
+            ]
+        });
+
+    })
+</script>
