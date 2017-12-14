@@ -1,0 +1,23 @@
+[ 2017-08-25T11:19:11+08:00 ] 127.0.0.1 /flat.php/substance/prereg.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.010653s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.013087s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.013137s ]
+NOTIC: [2048] Declaration of Home\Controller\EmptyController::error() should be compatible with Think\Controller::error($message = '', $jumpUrl = '', $ajax = false) E:\Web\WWW\ThinkFLAT\ThinkFlat\Home\Controller\EmptyController.class.php 第 41 行.
+NOTIC: [2048] Declaration of Home\Controller\EmptyController::success() should be compatible with Think\Controller::success($message = '', $jumpUrl = '', $ajax = false) E:\Web\WWW\ThinkFLAT\ThinkFlat\Home\Controller\EmptyController.class.php 第 41 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000626s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000661s ]
+NOTIC: [8] Undefined variable: pjax E:\Web\WWW\ThinkFLAT\ThinkFlat\Runtime\Cache\Home\564e8ba16e4e48579c29a3b455201bd5.php 第 155 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.198755s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.198794s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.010165s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.010198s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.007152s ]
+INFO: [ app_end ] --END-- [ RunTime:0.007194s ]
+
