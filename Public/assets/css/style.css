@@ -1,0 +1,478 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300);
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Microsoft YaHei','Open Sans', sans-serif;
+    color: #666;
+}
+a,a:hover,a:active,a:link,a:visited{
+    text-decoration:none;
+}
+/*
+ navigation > toggle-nav(toggle-sidenav)
+*/
+.navigation{
+    min-height:40px;
+    width: 100%;
+    background: #368ee0;
+}
+.navigation>.container-fluid>*{
+    min-height:40px;
+    line-height: 40px;
+}
+.navigation .logo{
+    float: left;
+    color: #fff;
+    font-size: 20px;
+    padding-left: 35px;
+    width:160px;
+    background: url(../images/logo.png) no-repeat 5px 10px;
+}
+.navigation .toggle-nav {
+    float: left;
+    color: #fff;
+    display: none;
+    font-size: 25px;
+    text-decoration: none;
+    height:40px;
+    width:40px;
+    text-align: center;
+}
+.navigation .toggle-nav.toggle-sidenav{
+    display: block
+}
+@media(max-width:992px) {
+    .navigation .logo{
+        margin-left: 10px;
+    }
+    .navigation>.container-fluid{
+        padding: 0
+    }
+    .navigation .toggle-nav{
+        display: block;
+        background-color: #1b67af;
+        margin-right: 10px;
+        float: right;
+    }
+    .navigation .toggle-nav.toggle-sidenav{
+        display: none
+    }
+}
+/*
+ navigation > headnav(collapse) > main-nav > dropdown > dropdown-toggle/dropdown-menu
+*/
+.navigation .headnav{
+    float: left;
+}
+.navigation .headnav ul{
+    list-style: none;
+}
+.navigation .headnav.collapse{
+    display: block;
+}
+.navigation .headnav .main-nav {
+    float: left;
+    margin: 0;
+    padding: 0
+}
+.navigation .headnav .main-nav>li{
+    float: left;
+}
+.navigation .headnav .main-nav>li.open{
+    background-color: #1b67af;
+}
+.navigation .headnav .main-nav>li>a{
+    display: block;
+    padding: 0 15px;
+    color: #fff;
+    text-decoration: none;
+}
+.navigation .headnav .main-nav>li>a:hover {
+    background-color: #1b67af;
+}
+.navigation .dropdown {
+    float: left;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+.navigation .dropdown .dropdown-menu {
+    border: 2px solid #368ee0;
+    border-top: 0;
+    background: #fff;
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+.navigation .dropdown .dropdown-menu>li>a{
+    padding: 10px 15px;
+    filter: none;
+}
+.navigation .dropdown .dropdown-menu > li >a:hover{
+    background: #368ee0;
+    color: #fff;
+    filter: none;
+}
+@media(max-width:992px) {
+    .navigation .headnav{
+        float: none;
+    }
+    .navigation .headnav.collapse{
+        display: none;
+    }
+    .navigation .headnav.collapse.in{
+        display: block;
+    }
+    .navigation .headnav .main-nav {
+        float: none;
+        display: block;
+        padding: 0;
+        padding-bottom: 0;
+        margin: 10px;
+        margin-top: 40px;
+        clear: both;
+    }
+    .navigation .headnav .main-nav>li{
+        float: none;
+        display: block;
+        clear: both;
+        background: #1b67af;
+        border-bottom: 1px solid #368ee0;
+    }
+    .navigation .dropdown .dropdown-menu {
+        position: static;
+        background: #1b67af;
+        float: none;
+        border:0;
+        padding:0 0 10px 25px;
+    }
+    .navigation .dropdown .dropdown-menu>li>a{
+        color: #fff;
+        padding: 6px 15px;
+        font-size: 12px;
+    }
+}
+/*
+ navigation > icon-nav > dropdown(dropdown-msg/language-select/icon-user) > dropdown-toggle/dropdown-menu(message-ul)
+*/
+.navigation .icon-nav .dropdown-msg>a,.navigation .icon-nav .icon-user>a,.navigation .icon-nav .language-select>a{
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 0 10px;
+}
+.navigation .icon-nav{
+    float: right;
+    font-size: 12px
+}
+.navigation .icon-nav .dropdown-msg {
+    margin-right: 3px;
+    float: left;
+    padding: 0 2px;
+}
+.navigation .icon-nav .dropdown-msg>a{
+    font-size: 16px;
+}
+.navigation .icon-nav .dropdown-msg>a .label {
+    position:absolute;
+    top: 5px;
+    left: 20px;
+    font-size: xx-small;
+    font-weight:400;
+    padding: 0 5px;
+    border-radius: 0;
+}
+.navigation .icon-nav .dropdown-msg>a .label.label-lightred {
+    background: #e63a3a;
+}
+.navigation .icon-nav .dropdown-msg>ul>li>a img {
+    float: left;
+    width: 40px;
+}
+.navigation .icon-nav .dropdown-msg>ul>li>a .details{
+    margin-left: 50px;
+}
+.navigation .icon-nav .dropdown-msg>ul>li>a .details .name {
+    font-size: 15px;
+}
+.navigation .icon-nav .dropdown-msg>ul>li>a .details .message {
+    margin-top: 2px;
+    color: #777;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    max-width: 350px;
+}
+.navigation .icon-nav .dropdown-msg>ul>li>a:hover .details .message{
+    color: #fff;
+}
+.navigation .icon-nav .dropdown-msg .message-ul{
+    padding: 0
+}
+.navigation .icon-nav .dropdown-msg a.more-messages{
+    background: #e6e6e6;
+    text-align: center;
+    padding: 8px 15px;
+    color: #000
+}
+.navigation .icon-nav .language-select .dropdown-menu a span {
+    margin-left: 5px;
+}
+.navigation .icon-nav img{
+    margin-left:5px;
+    vertical-align: middle;
+}
+.navigation .icon-nav span{
+    vertical-align: middle;
+}
+.navigation .icon-nav .dropdown .dropdown-menu{
+    font-size: 12px;
+}
+@media(max-width:992px) {
+    .navigation .icon-nav{
+        position:absolute;
+        top:0;
+        right:50px;
+        z-index: 10000;
+        display: block;
+    }
+    .navigation .icon-nav .dropdown .dropdown-menu{
+        position: absolute;
+        border: 2px solid #368ee0;
+        border-top:0; 
+        background: #fff;
+        padding:0;
+        min-width: auto;
+    }
+    .navigation .icon-nav .dropdown .dropdown-menu>li>a{
+        color: #333;
+        padding: 6px 15px
+    }
+    .navigation .icon-nav .dropdown-msg{
+        display: none;
+    }
+    .navigation .icon-nav .language-select .dropdown-toggle img{
+        height: 20px;
+        width: 20px;
+        border-radius: 10px;
+        background: #1b67af;
+    }
+}
+@media(max-width:992px) {
+    .sidenav{
+        display: none;
+    }
+}
+.sidenav{
+    position:fixed;
+    width:215px;
+    top:40px;
+    left:0;
+    bottom:0;
+    background: #eee;
+    z-index: 999;
+    overflow: auto;
+}
+.sidenav .search-form {
+    height: 35px;
+    margin: 0;
+}
+.sidenav .search-form>.search-pane {
+    margin: 5px;
+    height: 29px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding-left: 5px;
+}
+.sidenav .search-form>.search-pane>input {
+    background: none;
+    border: 0;
+    float: left;
+    height: 27px;
+    font-size: 12px;
+    width: 145px;
+}
+.sidenav .search-form > .search-pane > input:focus {
+    outline:none;
+}
+.sidenav .search-form > .search-pane button[type="submit"] {
+    float: right;
+    background: #368ee0;
+    color: #fff;
+    border: 0;
+    margin: 1px ;
+    height: 25px;
+    width: 25px;
+}
+.sidenav .subnav {
+    margin:15px 0;
+}
+.sidenav .subnav:hover .subnav-title .toggle-subnav i {
+    display: block;
+}
+.sidenav .subnav .subnav-title .toggle-subnav.collapsed i{
+    display: block;
+}
+.sidenav .subnav .subnav-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.sidenav .subnav .subnav-title:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.sidenav .subnav .subnav-title span {
+    margin-left: 20px;
+    font-size: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.sidenav .subnav .subnav-title .toggle-subnav {
+    color: #444;
+    padding: 1px 6px;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.sidenav .subnav .subnav-title .toggle-subnav i {
+    position: absolute;
+    left: 12px;
+    top: 6px;
+    display: none;
+}
+.sidenav .subnav .subnav-title .toggle-subnav:hover {
+    color: #222;
+}
+.sidenav .subnav .subnav-menu {
+    list-style-type: none;
+    margin: 5px 0;
+    padding: 0;
+}
+.sidenav .subnav .subnav-menu > li {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.sidenav .subnav .subnav-menu > li > a {
+    color: #555;
+    display: block;
+    padding: 5px 0 5px 27px;
+    text-decoration: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.sidenav .subnav .subnav-menu > li > a:hover {
+    background: #ddd;
+    color: #222;
+}
+.sidenav .subnav .subnav-menu > li.active > a {
+    background: #ccc;
+    color: #222;
+    font-weight: bold;
+}
+.main-area{
+    left:215px;
+    padding:110px 5px 5px 220px;
+    background: #fff;
+    height: 100%;
+}
+@media(max-width:992px) {
+    .main-area{
+        margin:5px;
+        padding:40px 5px 5px 0;
+    }
+}
+#page-header{
+    position:fixed;
+    top:40px;
+    margin: 0;
+    height: 70px;
+    overflow: hidden;
+    width: 100%;
+    padding:5px 0;
+    background: #fff;
+}
+#page-header h1{
+    margin: 10px 0;
+}
+@media(max-width:992px) {
+    #page-header{
+        position: static;
+        height: auto;
+    }
+    #page-header h1{
+        margin: 0;
+        font-size: 16px;
+    }
+}
+#main{
+    width: 100%;
+    clear: both;
+    margin-top: 5px;
+}
+.minitiles{
+    list-style: none;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0
+}
+.minitiles li{
+    float:left;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+}
+.minitiles li a{
+    vertical-align: middle;
+    text-align: center;
+}
+.minitiles li i{
+    font-size: 40px;
+    line-height: 60px;
+    color: #fff;
+    padding:0 10px;
+}
+.minitiles>li>a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    text-align: center;
+    height: 60px;
+    width: 60px;
+}
+.minitiles li .details{
+    float: right;
+    margin: 8px 10px 0 0;
+}
+.minitiles li .details span{
+    display: block;
+    color: #fff;
+}
+.minitiles li .details span.big {
+    font-size: 16px;
+}
+.bgray{
+    background: #333;
+}
+.bblue{
+    background: #1b67af
+}
+.bgreen {
+    background: #56af45;
+}
+#main .breadcrumb{
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+#main .main-show{
+    position:relative;
+    border:1px solid #eee;
+    overflow: hidden;
+    padding: 5px;
+    border-radius: 5px;
+}
