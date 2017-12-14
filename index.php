@@ -25,4 +25,4 @@ define('BIND_MODULE','Home');
 define('CACHE_MAIN', '../cache/');
 define('RUNTIME_PATH', CACHE_MAIN . 'runtime/');
 // 引入Thinkphp框架
-require '../../cgi-bin/ThinkPHP.php';
+require '../../cgi-bin/ThinkPHP.php'; 
