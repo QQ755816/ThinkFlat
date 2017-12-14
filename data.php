@@ -1,7 +1,7 @@
 {
 "draw": <?php echo $_POST['draw']; ?>,
-  "recordsTotal": 57,
-  "recordsFiltered": 20,
+  "recordsTotal": 2257,
+  "recordsFiltered": 2200,
   "data": [
     {
       "first_name": "Airi",

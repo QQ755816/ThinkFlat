@@ -5,6 +5,9 @@ body{
     font-family: 'Microsoft YaHei','Open Sans', sans-serif;
     color: #666;
 }
+.pace-inactive{
+    display: none;
+}
 a,a:hover,a:active,a:link,a:visited{
     text-decoration:none;
 }
@@ -15,6 +18,10 @@ a,a:hover,a:active,a:link,a:visited{
     min-height:40px;
     width: 100%;
     background: #368ee0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 .navigation>.container-fluid>*{
     min-height:40px;
@@ -264,10 +271,14 @@ a,a:hover,a:active,a:link,a:visited{
     }
 }
 .sidenav{
+    position:fixed;
     width:215px;
+    top:40px;
+    left:0;
+    bottom:0;
     background: #eee;
+    z-index: 999;
     overflow: auto;
-    float: left;
 }
 .sidenav .search-form {
     height: 35px;
@@ -371,17 +382,20 @@ a,a:hover,a:active,a:link,a:visited{
     font-weight: bold;
 }
 .main-area{
-    padding:0 5px;
-    padding-left: 220px;
+    left:215px;
+    padding:110px 5px 5px 220px;
     background: #fff;
+    height: 100%;
 }
 @media(max-width:992px) {
     .main-area{
         margin:5px;
-        padding:0 5px;
+        padding:40px 5px 5px 0;
     }
 }
 #page-header{
+    position:fixed;
+    top:40px;
     margin: 0;
     height: 70px;
     overflow: hidden;
@@ -403,6 +417,8 @@ a,a:hover,a:active,a:link,a:visited{
     }
 }
 #main{
+    width: 100%;
+    clear: both;
     margin-top: 5px;
 }
 .minitiles{
@@ -466,4 +482,13 @@ a,a:hover,a:active,a:link,a:visited{
     overflow: hidden;
     padding: 5px;
     border-radius: 5px;
+    height: 200px;
+}
+@media(max-width:992px) {
+    #main .main-show{
+        height: auto;
+    }
+    #main .main-show .container-fluid{
+        padding: 0;
+    }
 }

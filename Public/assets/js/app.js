@@ -37,6 +37,9 @@ $(function () {
         titleSuffix: '',
         filter: function () {},
         callback: function () {
+            if($('.toggle-nav:not([class*="toggle-sidenav"])').attr('aria-expanded')=='true'){
+                $('.toggle-nav:not([class*="toggle-sidenav"])').click();
+            }
             resize();
         }
     });
@@ -53,6 +56,10 @@ function resize() {
     if (isComputer()) {
         $('body').attr('scroll','no');
         $('.sidenav').height(winH - mainNavH);
+        $('.main-area').width(winW - sideNavW - 10);
+        $('.page-header').width(winW - sideNavW - 10);
+        $('.sidenav').perfectScrollbar();
+        $('.main-show').height(winH - mainNavH - pageHeadH - breadcrumbH - 25).perfectScrollbar();
     } else {
         $('.sidenav').height('auto');
     }
