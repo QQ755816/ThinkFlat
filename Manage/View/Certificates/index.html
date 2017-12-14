@@ -1,0 +1,102 @@
+<div class="easyui-panel box-{$random}" data-options="fit:true,border:0">
+    <table id="grid-{$random}"></table>
+    <div id="toolbar-{$random}" style="padding:5px">
+        <input type="text" id="key-{$random}" class="easyui-textbox" />
+        <a id="search-{$random}">搜索内容</a>
+        <a id="refresh-{$random}">刷新列表</a>
+        <a id="add-{$random}">添加证书</a>
+    </div>
+</div>
+<script>
+    $(function () {
+        try {
+            var decorate = function () {
+                var rows = $('#grid-{$random}').datagrid('getRows');
+                $.each(rows, function (i, row) {
+                    $('#edit-' + row.id + '-{$random}').text('[ 编辑 ]').unbind('click').bind('click', function () {
+                        win({
+                            title: '编辑证书&rarr;' + row.documentid,
+                            href: "{:U('update')}",
+                            icon: 'icon-edit',
+                            form: true,
+                            render: '{$random}',
+                            param: {
+                                id: row.id
+                            },
+                            submitOK: function () {
+                                $('#grid-{$random}').datagrid('reload');
+                            }
+                        });
+                    });
+                    $('#status-' + row.id + '-{$random}').unbind('click').bind('click', function () {
+                        var status = (parseInt(row.status) + 1) % 2;
+                        $.post("{:U('status','type='.I('get.type'))}", {id: row.id, status: status}, function (v) {
+                            if (v.status) {
+                                row.status = status;
+                                $('#grid-{$random}').datagrid('refreshRow', i);
+                                $.messager.show({
+                                    title: 'Success:', showType: 'slide',
+                                    msg: v.info,
+                                    style: {
+                                        right: '', bottom: '',
+                                        top: document.body.scrollTop + document.documentElement.scrollTop
+                                    }
+                                });
+                                decorate();
+                            } else {
+                                $.messager.alert('Error', v.info, 'error');
+                            }
+                        }, 'json')
+                    });
+                });
+            }
+            $('#grid-{$random}').datagrid({
+                url: "{:U('index','type='.I('get.type'))}",
+                toolbar: '#toolbar-{$random}',
+                idField: 'id',
+                fit: true, border: false, fitColumns: true, singleSelect: true, nowrap: false,
+                pagination: true, pageSize: 30,
+                columns: [[
+                        {field: 'id', title: '编号', width: 50, align: 'center'},
+                        {field: 'createat', title: '创建日期', width: 50, align: 'center', formatter: timestampformat},
+                        {field: 'status', title: '状态', width: 50, align: 'center', formatter: function (val, row, i) {
+                                return '<a href="javascript:;" id="status-' + row.id + '-{$random}">' + status(val) + '</a>';
+                            }},
+                        {field: 'documentid', title: '证书编号', width: 100, align: 'center'},
+                        {field: 'company', title: '公司信息', width: 100, align: 'center'},
+                        {field: 'certficate', title: '文件信息', width: 50, align: 'center', formatter: file_formatter},
+                        {field: 'typename', title: '报告类型', width: 50, align: 'center'},
+                        {field: 'oper-edit', title: '编辑', width: 50, align: 'center', formatter: function (val, row, i) {
+                                return '<a href="javascript:;" id="edit-' + row.id + '-{$random}"></a>';
+                            }},
+                    ]],
+                onLoadSuccess: function (data) {
+                    decorate();
+                }
+            });
+            $('#add-{$random}').linkbutton({iconCls: 'icon-add'}).bind('click', function () {
+                win({
+                    title: $(this).text(),
+                    href: "{:U('add','type='.I('get.type'))}",
+                    icon: 'icon-add',
+                    form: true,
+                    render: '{$random}',
+                    maximizable: false,
+                    submitOK: function (dpost, dback) {
+                        $('#grid-{$random}').datagrid('reload');
+                    }
+                });
+            });
+            $('#search-{$random}').linkbutton({iconCls: 'icon-search'}).bind('click', function () {
+                var key = $('#key-{$random}').textbox('getValue');
+                $('#grid-{$random}').datagrid('load', {key: key});
+            });
+            $('#refresh-{$random}').linkbutton({iconCls: 'icon-reload'}).bind('click', function () {
+                $('#key-{$random}').textbox('clear');
+                $('#grid-{$random}').datagrid('load', {});
+            });
+        } catch (e) {
+            $.messager.alert('Error', e.name + ": " + e.message, 'error');
+        }
+    });
+</script>

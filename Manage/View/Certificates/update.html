@@ -1,0 +1,75 @@
+<form id="form-{:I('get.render')}" method="post" class="easyui-panel" data-options="fit:true,border:false" action="{:U('update','id='.I('get.id'))}">
+    <table class="form-table" cellpadding="0" cellspacing="0" style="width: 840px">
+        <tr>
+            <th style="width:80px"><span class="red">★</span>企业信息</th>
+            <td colspan="2"><input type="text" name="company" class="easyui-textbox" style="width:100%" data-options="required:true" /></td>
+        </tr>
+        <tr>
+            <th style="width:80px"><span class="red">★</span>文件编号</th>
+            <td colspan="2"><input type="text" name="documentid" class="easyui-textbox" style="width:100%" data-options="required:true" /></td>
+        </tr>
+        <tr>
+            <th style="width:80px"><span class="red">★</span>文件类型</th>
+            <td colspan="2">
+                <select type="text" name="filetype" class="easyui-combobox" style="width:100%" data-options="required:true,editable:false">
+                    <volist name="filetypes" id="vo" >
+                        <option value="{$vo.id}">{$vo.typename}</option>
+                    </volist>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:80px"><span class="red">★</span>PDF上传</th>
+            <td>
+                <input type="text" id="file-{$random}" name="certficate" class="easyui-textbox" style="width:100%;" data-options="editable:false" />
+                <input type="hidden" id="newfile-{$random}" name="newfile" value="0" />
+            </td>
+            <td style="width:150px">
+                <a id="set-file-{$random}">选择</a> <a id="clear-file-{$random}">清除</a> 
+            </td>
+        </tr>
+    </table>
+</form>
+<script>
+    $(function () {
+        try {
+            var data = {$data};
+            data['pubdate'] = timestampformat(data['pubdate']);
+            $("#form-{:I('get.render')}").form('load', data);
+            $('#set-file-{$random}').linkbutton({
+                iconCls: 'icon-gear'
+            }).bind('click', function () {
+                var editor = KindEditor.editor({
+                    allowFileManager: false
+                });
+                editor.loadPlugin('certficate', function () {
+                    editor.plugin.fileDialog({
+                        fileUrl: $('#file-{$random}').textbox('getValue'),
+                        clickFn: function (url, title) {
+                            $('#file-{$random}').textbox('setValue', url);
+                            $('#newfile-{$random}').val(1);
+                            editor.hideDialog();
+                        }
+                    });
+                });
+            });
+            $('#clear-file-{$random}').linkbutton({
+                iconCls: 'icon-no'
+            }).bind('click', function () {
+                $('#file-{$random}').textbox('clear');
+            });
+            var height = {$formheight} + 120;
+            height = (height > $(window).height() ? $(window).height() : height);
+            height = (height < 260 ? 260 : height);
+            $("#win-{:I('get.render')}").window('resize', {
+                width: 880,
+                height: height
+            }).window('center');
+            $("#tab-{:I('get.render')}").tabs({
+                fit: true
+            });
+        } catch (e) {
+            $.messager.alert('Error', e.name + ": " + e.message, 'error');
+        }
+    })
+</script>

@@ -1,0 +1,16 @@
+<div id="login-{$random}"></div>
+<script>
+$(function(){
+    $('#login-{$random}').window({
+        width:600,
+        height:400,
+        modal:true,
+		content:"{:U('add')}",
+		title:'Login',
+		closable:false,
+		resizable:false,
+		minimizable:false,
+		maximizable:false,
+    });
+});	
+</script>

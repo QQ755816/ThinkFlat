@@ -1,0 +1,74 @@
+<extend name="Base:index" />
+<block name="title">
+    <title>{:C('system.webname')}</title>
+    <meta name="powerby" content="QQ755816">
+    <meta name="keywords" content="{$cate.keywords}">
+    <meta name="description" content="{$cate.description}">
+</block>
+<block name="main">
+    <div class="container-fluid top"></div>
+    <div class="container">
+        <a class="logo" href="/">{:C('system.webname')}</a>
+    </div>
+    <div class="container menu">
+        <div class="pull-left visible-sm visible-xs"></div>
+        <div class="pull-right"><a href="http://www.cirs-ck.com">杭州希科检测</a></div>
+    </div>
+    <div class="container">
+        <h1>Document Verification System</h1>
+        <div class="rows">
+            <div class="col-md-9 col-md-push-3 col-sm-12">
+                <if condition="$document neq null">
+                    <if condition="$document['showtype'] eq 0">
+                        <div class="pdfbutton">
+                            <button class="btn btn-sm btn-primary prev">Previous</button>
+                            <span>Page: <span class="page_num"></span> / <span class="page_count"></span></span>
+                            <button class="btn btn-sm btn-primary next">Next</button>
+                        </div>
+                        <div id="canvas">
+                            
+                        </div>
+                        <div class="pdfbutton">
+                            <button class="btn btn-sm btn-primary prev">Previous</button>
+                            <span>Page: <span class="page_num"></span> / <span class="page_count"></span></span>
+                            <button class="btn btn-sm btn-primary next">Next</button>
+                        </div>
+                    </if>
+                    <if condition="$document['showtype'] eq 1">
+                        <div class="pdfbutton">
+                            <button class="btn btn-sm btn-primary prev">Previous</button>
+                            <span>Page: <span class="page_num"></span> / <span class="page_count"></span></span>
+                            <button class="btn btn-sm btn-primary next">Next</button>
+                        </div>
+                        <img id="the-canvas" class="the-canvas" src="" />
+                        <div class="pdfbutton">
+                            <button class="btn btn-sm btn-primary prev">Previous</button>
+                            <span>Page: <span class="page_num"></span> / <span class="page_count"></span></span>
+                            <button class="btn btn-sm btn-primary next">Next</button>
+                        </div>
+                    </if>
+                </if>
+            </div>
+            <div class="col-md-3 col-md-pull-9 col-sm-12">
+                <form class="form" method="post">
+                    <div class="form-group">
+                        <label for="comp">公司名称</label>
+                        <input type="text" class="form-control" id="comp" name="comp" value="{$document.company}" placeholder="Company Name" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="docid">报告编号</label>
+                        <input type="text" class="form-control" id="docid" name="docid" value="{$document.documentid}" placeholder="Document No." required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="verify">验证码</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="verify" name="verify" required="required" placeholder="Verify Code">
+                            <div class="input-group-addon verifyimg"><img data-src="/index/verify.html" src="/index/verify.html" class="verifycode"></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Verify</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</block>
