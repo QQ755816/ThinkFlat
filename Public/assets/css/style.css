@@ -264,14 +264,10 @@ a,a:hover,a:active,a:link,a:visited{
     }
 }
 .sidenav{
-    position:fixed;
     width:215px;
-    top:40px;
-    left:0;
-    bottom:0;
     background: #eee;
-    z-index: 999;
     overflow: auto;
+    float: left;
 }
 .sidenav .search-form {
     height: 35px;
@@ -375,20 +371,17 @@ a,a:hover,a:active,a:link,a:visited{
     font-weight: bold;
 }
 .main-area{
-    left:215px;
-    padding:110px 5px 5px 220px;
+    padding:0 5px;
+    padding-left: 220px;
     background: #fff;
-    height: 100%;
 }
 @media(max-width:992px) {
     .main-area{
         margin:5px;
-        padding:40px 5px 5px 0;
+        padding:0 5px;
     }
 }
 #page-header{
-    position:fixed;
-    top:40px;
     margin: 0;
     height: 70px;
     overflow: hidden;
@@ -410,8 +403,6 @@ a,a:hover,a:active,a:link,a:visited{
     }
 }
 #main{
-    width: 100%;
-    clear: both;
     margin-top: 5px;
 }
 .minitiles{

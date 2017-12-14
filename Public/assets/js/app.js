@@ -53,15 +53,6 @@ function resize() {
     if (isComputer()) {
         $('body').attr('scroll','no');
         $('.sidenav').height(winH - mainNavH);
-        $('.main-area').width(winW - sideNavW - 10);
-        $('#page-header').width(winW - sideNavW - 10);
-        $('.sidenav').perfectScrollbar();
-        $('.main-show').height(winH - mainNavH - pageHeadH - breadcrumbH - 25);
-        $('.main-show').perfectScrollbar({
-            wheelSpeed: 2,
-            wheelPropagation: true,
-            minScrollbarLength: 20
-        });
     } else {
         $('.sidenav').height('auto');
     }
