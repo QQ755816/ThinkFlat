@@ -9,88 +9,262 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Jquery -->
         <script src="/Public/plugs/jquery-1.12.4.min.js" type="text/javascript"></script>
+        <!-- Bootstrap -->
+        <link href="/Public/plugs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/Public/plugs/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+        <script src="/Public/plugs/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     </head>
     <style>
+        /* Bootsharp CSS Copy*/
+        .text-center{
+            text-align: center;
+        }
         .row {
             margin-right: -15px;
             margin-left: -15px;
         }
+        /* Bootsharp CSS End*/
         .row.tablegrid-warp{
             margin: 0;
         }
         .row.tablegrid-warp .row{
             margin: 0;
         }
+        .btn{
+            margin-left: 2px
+        }
+        .sorting{
+            user-select: none;
+            background: url(/Public/assets/images/sorting.png) no-repeat right;
+            cursor: pointer;
+        }
+        .sorting-asc{
+            background:#ddd url(/Public/assets/images/sorting-asc.png) no-repeat right;
+        }
+        .sorting-desc{
+            background:#ddd url(/Public/assets/images/sorting-desc.png) no-repeat right;
+        }
     </style>
     <body>
-        <div id="div"></div>
-        <table id="table">
-            <tr>
-                <td data-field="id">ID</td>
-                <td data-field="name">Name</td>
-                <td data-field="company">Company</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>James</td>
-                <td>CIRS</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>ZZQ</td>
-                <td>RUIXU</td>
-            </tr>
-        </table>
+        <div style="width:800px;margin: 20px auto;">
+            <div id="div"></div>
+        </div>
+        <div style="width:800px;margin: 20px auto;">
+            <table id="table">
+                <tr>
+                    <td data-field=""></td>
+                    <td data-field="name" data-center="true" data-sortable="true" data-formatter="formatter">Name</td>
+                    <td data-field="company" data-sortable="true">Company</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>James</td>
+                    <td>CIRS</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>ZZQ</td>
+                    <td>RUIXU</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>12</td>
+                    <td>啊啊啊</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>2</td>
+                    <td>哦哦哦</td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>
 <script>
+    function formatter(val, index, row) {
+        return val + '/' + index;
+    }
+    /*
+     * rows  数据源
+     * key   排序字段
+     * order 正序1 反序0
+     */
+    function rowsort(rows, key, order) {
+        if (order) {
+            rows = rows.sort(function (a, b) {
+                if ($.isNumeric(a[key]) && $.isNumeric(b[key])) {
+                    return a[key] - b[key];
+                }
+                return a[key] > b[key];
+            });
+        } else {
+            rows = rows.sort(function (a, b) {
+                if ($.isNumeric(a[key]) && $.isNumeric(b[key])) {
+                    return b[key] - a[key];
+                }
+                return b[key] > a[key];
+            });
+        }
+        return rows;
+    }
+
     (function ($) {
         //private method
-        function initialization(obj, options) {
-            console.info(options);
+        function initialization(obj) {
+            var options = obj.data('tablegrid').options;
+            obj.addClass(options.class);
             var wrapid = obj.attr('id') + '-wrap';
+            $('#' + wrapid + '-header').addClass(options.headClass);
+            $('#' + wrapid + '-toolbar').addClass(options.toolbarClass);
+            $('#' + wrapid + '-grid').addClass(options.gridClass);
+            $('#' + wrapid + '-footer').addClass(options.footerClass);
             if (!options.header) {
                 $('#' + wrapid + '-header').remove();
-            } else {
-                $('#' + wrapid + '-header').addClass(options.headClass);
             }
             if (!options.footer) {
                 $('#' + wrapid + '-footer').remove();
-            } else {
-                $('#' + wrapid + '-footer').addClass(options.footerClass);
             }
             if (options.buttons.length) {
-                if (options.btnRender) {
-                    if ($('#' + wrapid + '-buttons').length == 0) {
-                        $('#' + wrapid + '-' + options.btnRender).append('<div id="' + wrapid + '-buttons" class="tablegrid-warp-buttons"></div>');
+                if ($('#' + wrapid + '-buttons').length == 0) {
+                    if (options.btnRender) {
+                        $('#' + wrapid + '-' + options.btnRender).append('<div id="' + wrapid + '-buttons" class="tablegrid-warp-buttons ' + options.btnBoxClass + '"></div>');
                         $('#' + wrapid + '-' + options.btnRender).addClass(options.btnRenderClass);
+                    } else {
+                        $('#' + wrapid + '-header').append('<div id="' + wrapid + '-buttons" class="tablegrid-warp-buttons ' + options.btnBoxClass + '"></div>');
                     }
-                } else {
-                    $('#' + wrapid + '-header').append('<div id="' + wrapid + '-buttons" class="tablegrid-warp-buttons"></div>');
                 }
                 var btnBox = $('#' + wrapid + '-buttons');
-                $.each(options.buttons, function (index, button) {
+                $.each(options.buttons, function (i, button) {
                     button.btnClass ? button.btnClass : button.btnClass = 'bt-default';
                     var btn = $('<button class="btn ' + button.btnClass + '">' + button.name + '</button>');
                     btnBox.append(btn);
                     btn.bind('click', button.action);
                 })
             }
+            obj.find('thead,tbody').remove();
+            var $thead = $('<tr></tr>');
+            $.each(options.columns, function (i, column) {
+                var col = $('<th></th>');
+                col.text(column.label.toUpperCase());
+                column.center ? col.addClass('text-center') : '';
+                if (column.sortable) {
+                    col.addClass('sorting')
+                    col.bind('click.sorting', function () {
+                        if (obj.data('tablegrid').sort) {
+                            $thead.children('th[class*="sorting"]').each(function () {
+                                $(this).removeClass('sorting-desc').removeClass('sorting-asc').addClass('sorting');
+                            })
+                            if (obj.data('tablegrid').sort.field == column.field) {
+                                obj.data('tablegrid').sort.order == true ? obj.data('tablegrid').sort.order = false : obj.data('tablegrid').sort.order = true
+                                col.removeClass('sorting-desc').removeClass('sorting-asc').addClass('sorting-' + obj.data('tablegrid').sort.order);
+                            } else {
+                                obj.data('tablegrid').sort = {field: column.field, order: true};
+                                col.removeClass('sorting').addClass('sorting-asc');
+                            }
+                        } else {
+                            obj.data('tablegrid').sort = {field: column.field, order: true};
+                            col.removeClass('sorting').addClass('sorting-asc');
+                        }
+                        obj.tablegrid('sort');
+                    })
+                }
+                column.center ? col.addClass('text-center') : '';
+                $thead.append(col);
+            })
+            $thead.wrap('<thead></thead>');
+            obj.append($thead);
+            var $tbody = $('<tbody></tbody>');
+            obj.append($tbody);
+            obj.data('tablegrid').options.databody = $tbody;
+            if (options.href) {
+                dataLoad(obj);
+            } else {
+                obj.data('tablegrid').options.datajson = {total: options.data.length, rows: options.data, _type: 0}; //这里后期修改 目前传递的静态data格式必须是 [{},{}]
+                drawData(obj);
+            }
         }
-        function initwarp(obj, wrapid) {
+        function dataLoad(obj) {
+            var options = obj.data('tablegrid').options;
+            if (obj.data('tablegrid').sort) {
+                options.queryParams._sort['field'] = obj.data('tablegrid').sort.field;
+                options.queryParams._sort['order'] = obj.data('tablegrid').sort.order;
+            }
+            $.ajax({
+                type: options.ajaxMethod,
+                url: options.href,
+                data: options.queryParams,
+                async: false,
+                success: function (data) { //data as {total: x, rows:[{},{}]};
+                    obj.data('tablegrid').options.datajson = data;
+                    drawData(obj);
+                },
+                dataType: 'json'
+            });
+        }
+        function drawData(obj) {
+            var options = obj.data('tablegrid').options;
+            var tbody = options.databody;
+            tbody.children().remove();
+            var datas = $.extend({_type: 1}, options.datajson);
+            var dispalyData = [];
+            if (datas._type == 0) {
+                if (obj.data('tablegrid').options.pagination) {
+                    var page = obj.data('tablegrid').page;
+                    var pagesize = obj.data('tablegrid').pagesize;
+                    var total = datas.total;
+                    while (page * pagesize > total) {
+                        page--;
+                    }
+                    // 1*10?5  | 10>5  -> 0*10?5  | 0<5√  page=0
+                    // 2*10?5  | 20>5  -> 1*10?5  | 10>5 -> 0*10?5 | 0<5√  page=0
+                    // 1*10?10 | 10=10√  page=page
+                    // 3*10?25 | 30>25 -> 2*10?25 | 20<25√  page=page-1
+                    if (page == 0) {
+                        page = 1;
+                    }
+                    obj.data('tablegrid').page = page;
+                    var startRow = (page - 1) * pagesize;
+                    var endRow = page * pagesize;
+                    endRow > total ? endRow = total : endRow = endRow;
+                    for (var i = startRow; i < endRow; i++) {
+                        dispalyData.push(datas.rows[i])
+                    }
+                } else {
+                    dispalyData = datas.rows;
+                }
+            } else {
+                dispalyData = datas.rows;
+            }
+            $.each(dispalyData, function (i, row) {
+                var rowTr = $('<tr></tr>');
+                $.each(options.columns, function (k, column) {
+                    var col = $('<td></td>');
+                    var tdHtml = row[column.field];
+                    if (column.formatter) {
+                        tdHtml = column.formatter(row[column.field], i, row);
+                    }
+                    column.center ? col.addClass('text-center') : '';
+                    col.html(tdHtml);
+                    rowTr.append(col);
+                })
+                tbody.append(rowTr);
+            })
+        }
+        function initwarp(obj, wrapid, options) {
             obj.wrap('<div id="' + wrapid + '" class="row tablegrid-warp"></div>');
-            $('#' + wrapid).prepend('<div id="' + wrapid + '-header" class="row tablegrid-warp-header"></div><div id="' + wrapid + '-toolbar" class="row tablegrid-warp-toolbar"></div>');
-            obj.wrap('<div id="' + wrapid + '-grid" class="row tablegrid-warp-grid"></div>');
-            $('#' + wrapid).append('<div id="' + wrapid + '-footer" class="row tablegrid-warp-footer"></div>');
+            $('#' + wrapid).prepend('<div id="' + wrapid + '-header" class="tablegrid-warp-header"></div><div id="' + wrapid + '-toolbar" class="tablegrid-warp-toolbar"></div>');
+            obj.wrap('<div id="' + wrapid + '-grid" class="tablegrid-warp-grid"></div>');
+            $('#' + wrapid).append('<div id="' + wrapid + '-footer" class="tablegrid-warp-footer"></div>');
             return obj;
         }
-        function initrepale(obj, wrapid) {
+        function initrepale(obj, wrapid, options) {
             obj.replaceWith('<div id="' + wrapid + '" class="row tablegrid-warp"></div>');
             var _this = $('#' + wrapid);
-            _this.append('<div id="' + wrapid + '-header" class="row tablegrid-warp-header"></div><div id="' + wrapid + '-toolbar" class="row tablegrid-warp-toolbar"></div>');
-            _this.append('<div id="' + wrapid + '-grid" class="row tablegrid-warp-grid"><table id="' + obj.attr('id') + '"></table></div>');
-            _this.append('<div id="' + wrapid + '-footer" class="row tablegrid-warp-footer"></div>');
+            _this.append('<div id="' + wrapid + '-header" class="tablegrid-warp-header"></div><div id="' + wrapid + '-toolbar" class="tablegrid-warp-toolbar"></div>');
+            _this.append('<div id="' + wrapid + '-grid" class="tablegrid-warp-grid"><table id="' + obj.attr('id') + '"></table></div>');
+            _this.append('<div id="' + wrapid + '-footer" class="tablegrid-warp-footer"></div>');
             return $('#' + obj.attr('id'));
         }
         function initColumns(trs) {
@@ -99,32 +273,17 @@ and open the template in the editor.
                 var cols = $(trs[0]).children('td,th');
                 $.each(cols, function (i, col) {
                     var temp = {};
-                    if ($(col).data('field')) {
-                        temp.field = $(col).data('field').toLowerCase();
-                    } else {
-                        temp.field = $(col).text().toLowerCase();
-                    }
+                    $(col).data('field') ? temp.field = $(col).data('field').toLowerCase() : temp.field = $(col).text().toLowerCase();
                     if (temp.field) {
-                        if ($(col).data('label')) {
-                            temp.label = $(col).data('label');
-                        } else {
-                            temp.label = temp.field;
-                        }
-                        if ($(col).data('width')) {
-                            temp.width = $(col).data('width');
-                        } else {
-                            temp.width = 50;
-                        }
-                        if ($(col).data('center')) {
-                            temp.center = $(col).data('center');
-                        }
-                        if ($(col).data('formart')) {
-                            temp.center = $(col).data('formart');
-                        }
+                        $(col).data('label') ? temp.label = $(col).data('label') : temp.label = temp.field;
+                        $(col).data('width') ? temp.width = $(col).data('width') : temp.width = 50;
+                        $(col).data('center') == true ? temp.center = true : temp.center = false;
+                        $(col).data('sortable') == true ? temp.sortable = true : temp.sortable = false;
+                        $(col).data('formatter') ? temp.formatter = eval($(col).data('formatter')) : temp.formatter = '';
+                    } else {
+                        delete temp.field;
                     }
-                    if (temp) {
-                        columns.push(temp);
-                    }
+                    columns.push(temp);
                 });
             }
             return columns;
@@ -136,7 +295,9 @@ and open the template in the editor.
                     var cols = $(trs[i]).children('td,th');
                     datas[i - 1] = {};
                     $.each(columns, function (k, column) {
-                        datas[i - 1][column['field']] = $(cols[k]).text();
+                        if (column['field']) {
+                            datas[i - 1][column['field']] = $(cols[k]).text();
+                        }
                     })
                 }
             }
@@ -147,43 +308,55 @@ and open the template in the editor.
             init: function (options) {
                 var data = this.data('tablegrid');
                 var settings = {
+                    class: '',
                     header: true, //显示头部
-                    headClass: '', //头部样式
                     footer: true, //显示表尾
-                    footerClass: '', //表尾样式
+                    headClass: 'row', //头部样式
+                    toolbarClass: '',
+                    gridClass: 'row', //表格部分外部样式
+                    footerClass: 'row', //表尾样式
                     pagination: false, //是否分页
                     columns: [], //栏目
                     response: false, //是否动态变化
                     pagesize: [10, 25, 50, 100], //每页数量
                     buttons: [], //自定义按钮
+                    btnBoxClass: '',
                     btnRender: '',
                     btnRenderClass: '',
                     toolbar: [], //工具栏
+                    href: '',
+                    ajaxMethod: 'post',
+                    queryParams: {},
+                    data: [],
+                    datajson: {},
                 };
                 var finalSetting = {};
                 var wrapid = this.attr('id') + '-wrap';
-                var _this = this;
                 if (this.is('table')) {
-                    _this = initwarp(this, wrapid);
-                    var tbody = _this.children('tbody');
+                    var tbody = this.children('thead,tbody');
                     var trs = tbody.children('tr');
-                    var loadFromTable = {}
-                    var columns = initColumns(trs);
-                    loadFromTable.columns = columns;
-                    loadFromTable.datas = initDatas(columns, trs);
-                    var settings = $.extend(settings, loadFromTable);
-                } else {
-                    _this = initrepale(this, wrapid);
-                }
-                if (!data) {
-                    _this.data('tablegrid', {
-                        target: _this,
-                        tablegrid: true
+                    if (options.columns == undefined) {
+                        var columns = initColumns(trs);
+                        settings.columns = columns;
+                        settings.data = initDatas(settings.columns, trs);
+                    }
+                    settings.columns = $.grep(settings.columns, function (n) {
+                        return !$.isEmptyObject(n);
                     });
-
                 }
                 settings = $.extend(settings, options);
+                var _this = this;
                 if (settings['columns'].length) {
+                    this.is('table') ? _this = initwarp(this, wrapid, options) : _this = initrepale(this, wrapid, options);
+                    if (!data) {
+                        _this.data('tablegrid', {
+                            target: _this,
+                            tablegrid: true,
+                            options: settings,
+                            page: 1,
+                            pagesize: settings['pagesize'][0],
+                        });
+                    }
                     initialization(_this, settings);
                 } else {
                     console.info("$('#" + _this.attr('id') + "') init: failed");
@@ -197,11 +370,20 @@ and open the template in the editor.
                     $('#' + wrapid).remove();
                 }
             },
-            reposition: function () {
-                //...
+            sort: function () {
+                var options = this.data('tablegrid').options;
+                var sortSet = this.data('tablegrid').sort;
+                this.data('tablegrid').options.page = 1;
+                if (options.href) {
+                    dataLoad(this);
+                } else {
+                    var datas = options.datajson.rows;
+                    this.data('tablegrid').options.datajson.rows = rowsort(datas, sortSet.field, sortSet.order);
+                    drawData(this)
+                }
             },
-            show: function () {
-                //...
+            reload: function () {
+
             },
             hide: function () {
                 //...
@@ -219,20 +401,51 @@ and open the template in the editor.
                 $.error('Method ' + method + ' does not exist on jQuery.tablegrid');
             }
         };
-
     })(jQuery);
-
     $(function () {
-        $('#div').tablegrid();
-        $('#div').tablegrid('destroy');
-        function add() {
-            alert(123);
-        }
-        $('#table').tablegrid({
-            buttons: [
-                {name: 'Add', btnClass: 'btn-success', action: add}
+        $('#div').tablegrid({
+            class: 'table table-striped table-bordered table-hover table-condensed',
+            href: '/data.php',
+            columns: [
+                {field: 'id', label: '编号', sortable: true},
+                {field: 'first_name', label: '姓', width: 100},
+                {field: 'last_name', label: '名', width: 100},
+                {field: 'position', label: '地址', width: 100},
+                {field: 'office', label: '工作地点', width: 100},
+                {field: 'start_date', label: '工作时间', width: 100},
+                {field: 'salary', label: '资金', width: 100},
             ]
         });
-
+        function _add() {
+            alert('Add');
+        }
+        function _update() {
+            alert('Update');
+        }
+        function _delete() {
+            alert('Delete');
+        }
+        $('#table').tablegrid({
+            class: 'table table-striped table-bordered table-hover table-condensed',
+            header: true, //显示头部
+            footer: true, //显示表尾
+            headClass: 'row', //头部样式
+            toolbarClass: 'row', //工具条外部样式
+            gridClass: 'row', //表格部分外部样式
+            footerClass: 'row', //表尾样式
+            bodyClass: '', //表格部分外部样式
+            pagination: true, //是否分页
+            response: false, //是否动态变化
+            pagesize: [10, 25, 50, 100], //每页数量
+            buttons: [
+                {name: 'Add', btnClass: 'btn-success btn-sm', action: _add},
+                {name: 'Update', btnClass: 'btn-info btn-sm', action: _update},
+                {name: 'Delete', btnClass: 'btn-danger btn-sm', action: _delete},
+            ],
+            btnBoxClass: 'col-md-12 text-right',
+            btnRender: '',
+            btnRenderClass: '',
+            toolbar: [], //工具栏
+        });
     })
 </script>
