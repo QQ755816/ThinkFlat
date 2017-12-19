@@ -14,7 +14,7 @@
 "first_name": "Angelica",
 "last_name": "Ramos",
 "position": "Chief Executive Officer (CEO)",
-"office": "London",
+"office": "San Francisco",
 "start_date": "9th Oct 09",
 "salary": "$1,200,000"
 },
@@ -22,7 +22,7 @@
 "first_name": "Ashton",
 "last_name": "Cox",
 "position": "Junior Technical Author",
-"office": "San Francisco",
+"office": "London",
 "start_date": "12th Jan 09",
 "salary": "$86,000"
 },
