@@ -26,9 +26,6 @@ and open the template in the editor.
             margin-left: -15px;
         }
         /* Bootsharp CSS End*/
-        .tablegrid-wrap{
-            position: relative;
-        }
         .tablegrid-wrap .tablegrid-wrap-grid table{
             margin: 0;
         }
@@ -37,6 +34,8 @@ and open the template in the editor.
         }
         .row.tablegrid-wrap{
             margin: 0;
+            position: relative;
+            margin: 5px;
         }
         .row.tablegrid-wrap .row{
             margin: 0;
@@ -48,7 +47,7 @@ and open the template in the editor.
             user-select: none;
             background: url(/Public/assets/images/sorting.png) no-repeat right;
             cursor: pointer;
-            min-width: 50px;
+            min-width: 60px;
         }
         .sorting-asc{
             background:#ddd url(/Public/assets/images/sorting-asc.png) no-repeat right;
@@ -60,22 +59,32 @@ and open the template in the editor.
             border: 1px solid #ddd;
             border-top:0
         }
+        .tablegrid-wrap-header{
+            border: 1px solid #ddd;
+            border-bottom: 0;
+        }
+        .tablegrid-wrap-buttons{
+            height: 40px;
+            line-height: 30px;
+            padding: 5px;
+        }
         .tablegrid-wrap-pagination,.tablegrid-wrap-datainfo{
             margin: 0;
             padding: 0;
             list-style: none;
-            text-align: right;
             height: 40px;
             line-height: 30px;
             padding: 5px;
             font-size: 12px;
         }
         .tablegrid-wrap-datainfo{
-            text-align: left;
+            
         }
         .tablegrid-wrap-pagination li{
+            padding: 0;
+            margin: 0;
             display: inline-table;
-            margin-left: 5px;
+            margin-left: 2px;
             border:1px solid #ccc;
         }
         .tablegrid-wrap-pagination li:first-child{
@@ -89,7 +98,8 @@ and open the template in the editor.
             line-height: 28px;
             text-align: center;
             text-decoration: none;
-            color: #368ee0
+            color: #368ee0;
+            font-size: 12px;
         }
         .tablegrid-wrap-pagination li.disabled a{
             color: #ccc;
@@ -99,18 +109,35 @@ and open the template in the editor.
             color: #fff;
             background: #1b67af
         }
+        .tablegrid-wrap-pagination .pagesize{
+            border:0
+        }
         .tablegrid-wrap-pagination .pagesize select{
             height: 30px;
             line-height: 30px;
             padding:0;
             border-radius: 0;
+            font-size: 12px;
+        }
+        @media(max-width:992px) {
+            .tablegrid-wrap-pagination,.tablegrid-wrap-datainfo{
+                height:auto;
+                text-align: center;
+                padding:0
+            }
+            .tablegrid-wrap-pagination li{
+                margin-bottom: 2px;
+            }
+            .tablegrid-wrap-pagination li:first-child{
+                display: none;
+            }
         }
     </style>
     <body>
-        <div style="width:800px;margin: 20px auto;">
+        <div class="container-fluid">
             <div id="div"></div>
         </div>
-        <div style="width:800px;margin: 20px auto;">
+        <div class="container-fluid">
             <table id="table">
                 <tr>
                     <td data-field="id"></td>
@@ -213,12 +240,16 @@ and open the template in the editor.
         //private method
         function initialization(obj) {
             var options = obj.data('tablegrid').options;
-            obj.addClass(options.class);
+            obj.addClass(options.Class);
             var wrapid = obj.attr('id') + '-wrap';
+            $('#' + wrapid).addClass(options.wrapClass);
             $('#' + wrapid + '-header').addClass(options.headClass);
             $('#' + wrapid + '-toolbar').addClass(options.toolbarClass);
             $('#' + wrapid + '-grid').addClass(options.gridClass);
             $('#' + wrapid + '-footer').addClass(options.footerClass);
+            if (options.responsive) {
+                $('#' + wrapid + '-grid').addClass('table-responsive');
+            }
             if (options.datainfo) {
                 if ($('#' + wrapid + '-datainfo').length == 0) {
                     var datainfo = $('<div id="' + wrapid + '-datainfo" class="tablegrid-wrap-datainfo ' + options.datainfoClass + '"></div>');
@@ -436,13 +467,14 @@ and open the template in the editor.
             if (options.pagesize.length > 1) {
                 var selet = $('<select class="form-control"></select>');
                 for (var i = 1; i < options.pagesize.length; i++) {
-                    selet.append('<option value="' + options.pagesize[i] + '">' + options.pagesize[i] + '</option>');
+                    selet.append('<option value="' + options.pagesize[i] + '">' + options.pagesize[i] + '条</option>');
                 }
                 selet.val(obj.data('tablegrid').pagesize);
                 selet.change(function () {
                     obj.data('tablegrid').pagesize = parseInt($(this).val());
                     loadData(obj);
-                })
+                });
+                pagination.append('<li>每页显示：</li>');
                 pagination.append(selet);
                 selet.wrap('<li class="pagesize"></li>')
             }
@@ -521,14 +553,14 @@ and open the template in the editor.
             }
         }
         function initwrap(obj, wrapid) {
-            obj.wrap('<div id="' + wrapid + '" class="row tablegrid-wrap"></div>');
+            obj.wrap('<div id="' + wrapid + '" class="tablegrid-wrap"></div>');
             $('#' + wrapid).prepend('<div id="' + wrapid + '-header" class="tablegrid-wrap-header"></div><div id="' + wrapid + '-toolbar" class="tablegrid-wrap-toolbar"></div>');
             obj.wrap('<div id="' + wrapid + '-grid" class="tablegrid-wrap-grid"></div>');
             $('#' + wrapid).append('<div id="' + wrapid + '-footer" class="tablegrid-wrap-footer"></div>');
             return obj;
         }
         function initrepale(obj, wrapid) {
-            obj.replaceWith('<div id="' + wrapid + '" class="row tablegrid-wrap"></div>');
+            obj.replaceWith('<div id="' + wrapid + '" class="tablegrid-wrap"></div>');
             var _this = $('#' + wrapid);
             _this.append('<div id="' + wrapid + '-header" class="tablegrid-wrap-header"></div><div id="' + wrapid + '-toolbar" class="tablegrid-wrap-toolbar"></div>');
             _this.append('<div id="' + wrapid + '-grid" class="tablegrid-wrap-grid"><table id="' + obj.attr('id') + '"></table></div>');
@@ -576,9 +608,10 @@ and open the template in the editor.
             init: function (options) {
                 var data = this.data('tablegrid');
                 var settings = {
-                    class: '',
                     header: true, //显示头部
                     footer: true, //显示表尾
+                    wrapClass: 'row',
+                    Class: '',
                     headClass: 'row', //头部样式
                     toolbarClass: 'row', //工具栏样式
                     gridClass: 'row', //表格部分外部样式
@@ -676,25 +709,33 @@ and open the template in the editor.
     })(jQuery);
     $(function () {
         $('#div').tablegrid({
-            class: 'table table-striped table-bordered table-hover table-condensed',
+            Class: 'table table-striped table-bordered table-hover table-condensed',
             pagination: true, //是否分页
+            responsive: true,
             href: '/data.php',
-            paginationClass: 'col-md-6',
+            paginationClass: 'col-md-6 col-sm-12',
             paginationBtns: 2, //左右最多显示多少个按钮
-            datainfoClass: 'col-md-6',
+            datainfoClass: 'col-md-6 col-sm-12',
+            paginationClass: 'col-md-6 col-sm-12 text-right',
             columns: [
                 {field: 'id', label: '编号', sortable: true},
                 {field: 'first_name', label: '姓', width: 100},
                 {field: 'last_name', label: '名', width: 100},
                 {field: 'position', label: '地址', width: 100},
-                {field: 'office', label: '工作地点', width: 100},
+                {field: 'office', label: '工作地点', width: 100,formatter:formatter},
                 {field: 'start_date', label: '工作时间', width: 100},
                 {field: 'salary', label: '资金', width: 100},
             ],
             merge: {
                 key: 'office',
                 merge: ['first_name', 'last_name']
-            }
+            },
+            buttons: [
+                {name: 'Add', btnClass: 'btn-success btn-sm', action: _add},
+                {name: 'Update', btnClass: 'btn-info btn-sm', action: _update},
+                {name: 'Delete', btnClass: 'btn-danger btn-sm', action: _delete},
+            ],
+            btnBoxClass: 'col-md-12',
         });
         function _add() {
             alert('Add');
@@ -706,14 +747,14 @@ and open the template in the editor.
             alert('Delete');
         }
         $('#table').tablegrid({
-            class: 'table table-striped table-bordered table-hover table-condensed',
+            Class: 'table table-striped table-bordered table-hover table-condensed',
             pagination: true, //是否分页
             buttons: [
                 {name: 'Add', btnClass: 'btn-success btn-sm', action: _add},
                 {name: 'Update', btnClass: 'btn-info btn-sm', action: _update},
                 {name: 'Delete', btnClass: 'btn-danger btn-sm', action: _delete},
             ],
-            btnBoxClass: 'col-md-12 text-right',
+            btnBoxClass: 'col-md-12',
         });
     })
 </script>
