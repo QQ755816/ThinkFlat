@@ -48,7 +48,7 @@ and open the template in the editor.
             user-select: none;
             background: url(/Public/assets/images/sorting.png) no-repeat right;
             cursor: pointer;
-            min-width: 100px;
+            min-width: 50px;
         }
         .sorting-asc{
             background:#ddd url(/Public/assets/images/sorting-asc.png) no-repeat right;
@@ -707,25 +707,13 @@ and open the template in the editor.
         }
         $('#table').tablegrid({
             class: 'table table-striped table-bordered table-hover table-condensed',
-            header: true, //显示头部
-            footer: true, //显示表尾
-            headClass: 'row', //头部样式
-            toolbarClass: 'row', //工具条外部样式
-            gridClass: 'row', //表格部分外部样式
-            footerClass: 'row', //表尾样式
-            bodyClass: '', //表格部分外部样式
             pagination: true, //是否分页
-            response: false, //是否动态变化
-            pagesize: [10, 10, 11, 50, 100], //每页数量
             buttons: [
                 {name: 'Add', btnClass: 'btn-success btn-sm', action: _add},
                 {name: 'Update', btnClass: 'btn-info btn-sm', action: _update},
                 {name: 'Delete', btnClass: 'btn-danger btn-sm', action: _delete},
             ],
             btnBoxClass: 'col-md-12 text-right',
-            btnRender: '',
-            btnRenderClass: '',
-            toolbar: [], //工具栏
         });
     })
 </script>
