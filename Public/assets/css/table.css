@@ -14,6 +14,10 @@
 .table>tbody>tr.selected{
     background: #d9edf7
 }
+table.dataTable {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
 .dataTables_wrapper>.row{
     clear: both;
 }
@@ -148,7 +152,6 @@ div.dataTables_wrapper div.dataTables_processing {
 }
 .box.box-bordered .box-content{
     border: 3px solid #368ee0;
-    padding-top: 5px;
 }
 .box .table{
     width: 100% !important;  

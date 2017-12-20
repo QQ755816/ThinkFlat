@@ -15,746 +15,119 @@ and open the template in the editor.
         <link href="/Public/plugs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="/Public/plugs/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
         <script src="/Public/plugs/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/Public/plugs/tablegrid/tablegrid.js" type="text/javascript"></script>
+        <link href="/Public/plugs/tablegrid/tablegrid.css" rel="stylesheet">
     </head>
-    <style>
-        /* Bootsharp CSS Copy*/
-        .text-center{
-            text-align: center;
-        }
-        .row {
-            margin-right: -15px;
-            margin-left: -15px;
-        }
-        /* Bootsharp CSS End*/
-        .tablegrid-wrap .tablegrid-wrap-grid table{
-            margin: 0;
-        }
-        .tablegrid-wrap .tablegrid-wrap-grid table td{
-            vertical-align:  middle;
-        }
-        .row.tablegrid-wrap{
-            margin: 0;
-            position: relative;
-            margin: 5px;
-        }
-        .row.tablegrid-wrap .row{
-            margin: 0;
-        }
-        .btn{
-            margin-left: 2px
-        }
-        .sorting{
-            user-select: none;
-            background: url(/Public/assets/images/sorting.png) no-repeat right;
-            cursor: pointer;
-            min-width: 60px;
-        }
-        .sorting-asc{
-            background:#ddd url(/Public/assets/images/sorting-asc.png) no-repeat right;
-        }
-        .sorting-desc{
-            background:#ddd url(/Public/assets/images/sorting-desc.png) no-repeat right;
-        }
-        .tablegrid-wrap-footer{
-            border: 1px solid #ddd;
-            border-top:0
-        }
-        .tablegrid-wrap-header{
-            border: 1px solid #ddd;
-            border-bottom: 0;
-        }
-        .tablegrid-wrap-buttons{
-            height: 40px;
-            line-height: 30px;
-            padding: 5px;
-        }
-        .tablegrid-wrap-pagination,.tablegrid-wrap-datainfo{
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            height: 40px;
-            line-height: 30px;
-            padding: 5px;
-            font-size: 12px;
-        }
-        .tablegrid-wrap-datainfo{
-            
-        }
-        .tablegrid-wrap-pagination li{
-            padding: 0;
-            margin: 0;
-            display: inline-table;
-            margin-left: 2px;
-            border:1px solid #ccc;
-        }
-        .tablegrid-wrap-pagination li:first-child{
-            border:0;
-            margin-left: 0;
-        }
-        .tablegrid-wrap-pagination li a{
-            display: block;
-            height: 28px;
-            min-width: 28px;
-            line-height: 28px;
-            text-align: center;
-            text-decoration: none;
-            color: #368ee0;
-            font-size: 12px;
-        }
-        .tablegrid-wrap-pagination li.disabled a{
-            color: #ccc;
-            cursor:default
-        }
-        .tablegrid-wrap-pagination li.current a{
-            color: #fff;
-            background: #1b67af
-        }
-        .tablegrid-wrap-pagination .pagesize{
-            border:0
-        }
-        .tablegrid-wrap-pagination .pagesize select{
-            height: 30px;
-            line-height: 30px;
-            padding:0;
-            border-radius: 0;
-            font-size: 12px;
-        }
-        @media(max-width:992px) {
-            .tablegrid-wrap-pagination,.tablegrid-wrap-datainfo{
-                height:auto;
-                text-align: center;
-                padding:0
-            }
-            .tablegrid-wrap-pagination li{
-                margin-bottom: 2px;
-            }
-            .tablegrid-wrap-pagination li:first-child{
-                display: none;
-            }
-        }
-    </style>
     <body>
         <div class="container-fluid">
             <div id="div"></div>
+            <div id="toolbar" class="toolbar">
+                <button class="btn btn-default" id="addBtn"><span class="glyphicon glyphicon glyphicon-plus"></span>添加</button>
+                <button class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon glyphicon-edit"></span>修改</button>
+                <button class="btn btn-default" id="removeBtn"><span class="glyphicon glyphicon glyphicon-remove"></span>删除</button>
+            </div>
         </div>
         <div class="container-fluid">
             <table id="table">
                 <tr>
-                    <td data-field="id"></td>
-                    <td data-field="name" data-center="true" data-sortable="true" data-formatter="formatter">Name</td>
+                    <td data-field="id" data-center="true" data-sortable="true"></td>
+                    <td data-field="name" data-center="true" data-sortable="true">Name</td>
                     <td data-field="company" data-sortable="true">Company</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>James</td>
-                    <td>CIRS</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ZZQ</td>
-                    <td>RUIXU</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>12</td>
-                    <td>啊啊啊</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>2</td>
-                    <td>哦哦哦</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>James</td>
-                    <td>CIRS</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>ZZQ</td>
-                    <td>RUIXU</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>12</td>
-                    <td>啊啊啊</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>2</td>
-                    <td>哦哦哦</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>2</td>
-                    <td>哦哦哦</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>2</td>
-                    <td>哦哦哦</td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td>2</td>
-                    <td>哦哦哦</td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>2</td>
-                    <td>哦哦哦</td>
-                </tr>
+                <tr><td>1</td><td>Airi</td><td>Satou</td></tr>
+                <tr><td>2</td><td>Angelica</td><td>Ramos</td></tr>
+                <tr><td>3</td><td>Brenden</td><td>Wagner</td></tr>
+                <tr><td>4</td><td>Brielle</td><td>Williamson</td></tr>
+                <tr><td>5</td><td>Bruno</td><td>Nash</td></tr>
+                <tr><td>6</td><td>Cedric</td><td>Kelly</td></tr>
+                <tr><td>7</td><td>Angelica</td><td>Ramos</td></tr>
+                <tr><td>8</td><td>Airi</td><td>Satou</td></tr>
+                <tr><td>9</td><td>Angelica</td><td>Ramos</td></tr>
+                <tr><td>10</td><td>Brenden</td><td>Wagner</td></tr>
+                <tr><td>11</td><td>Brielle</td><td>Williamson</td></tr>
+                <tr><td>12</td><td>Bruno</td><td>Nash</td></tr>
+                <tr><td>13</td><td>Cedric</td><td>Kelly</td></tr>
+                <tr><td>14</td><td>Angelica</td><td>Ramos</td></tr>
             </table>
         </div>
     </body>
 </html>
 <script>
-    function formatter(val, index, row) {
-        return val + '/' + index;
-    }
-    /*
-     * rows  数据源
-     * key   排序字段
-     * order 正序1 反序0
-     */
-    function rowsort(rows, key, order) {
-        if (order) {
-            rows = rows.sort(function (a, b) {
-                if ($.isNumeric(a[key]) && $.isNumeric(b[key])) {
-                    return a[key] - b[key];
-                }
-                return a[key] > b[key];
-            });
-        } else {
-            rows = rows.sort(function (a, b) {
-                if ($.isNumeric(a[key]) && $.isNumeric(b[key])) {
-                    return b[key] - a[key];
-                }
-                return b[key] > a[key];
-            });
-        }
-        return rows;
-    }
-
-    (function ($) {
-        //private method
-        function initialization(obj) {
-            var options = obj.data('tablegrid').options;
-            obj.addClass(options.Class);
-            var wrapid = obj.attr('id') + '-wrap';
-            $('#' + wrapid).addClass(options.wrapClass);
-            $('#' + wrapid + '-header').addClass(options.headClass);
-            $('#' + wrapid + '-toolbar').addClass(options.toolbarClass);
-            $('#' + wrapid + '-grid').addClass(options.gridClass);
-            $('#' + wrapid + '-footer').addClass(options.footerClass);
-            if (options.responsive) {
-                $('#' + wrapid + '-grid').addClass('table-responsive');
-            }
-            if (options.datainfo) {
-                if ($('#' + wrapid + '-datainfo').length == 0) {
-                    var datainfo = $('<div id="' + wrapid + '-datainfo" class="tablegrid-wrap-datainfo ' + options.datainfoClass + '"></div>');
-                    if (options.datainfoRender) {
-                        $('#' + wrapid + '-' + options.datainfoRender).append(datainfo);
-                        $('#' + wrapid + '-' + options.datainfoRender).addClass(options.datainfoRenderClass);
-                    } else {
-                        $('#' + wrapid + '-footer').append(datainfo);
-                    }
-                }
-            }
-            if (options.buttons.length) {
-                if ($('#' + wrapid + '-buttons').length == 0) {
-                    if (options.btnRender) {
-                        $('#' + wrapid + '-' + options.btnRender).append('<div id="' + wrapid + '-buttons" class="tablegrid-wrap-buttons ' + options.btnBoxClass + '"></div>');
-                        $('#' + wrapid + '-' + options.btnRender).addClass(options.btnRenderClass);
-                    } else {
-                        $('#' + wrapid + '-header').append('<div id="' + wrapid + '-buttons" class="tablegrid-wrap-buttons ' + options.btnBoxClass + '"></div>');
-                    }
-                }
-                var btnBox = $('#' + wrapid + '-buttons');
-                $.each(options.buttons, function (i, button) {
-                    button.btnClass ? button.btnClass : button.btnClass = 'bt-default';
-                    var btn = $('<button class="btn ' + button.btnClass + '">' + button.name + '</button>');
-                    btnBox.append(btn);
-                    btn.bind('click', button.action);
-                })
-            }
-            if (!options.header) {
-                $('#' + wrapid + '-header').remove();
-            }
-            if (!options.footer) {
-                $('#' + wrapid + '-footer').remove();
-            }
-            obj.find('thead,tbody').remove();
-            var $thead = $('<tr></tr>');
-            $.each(options.columns, function (i, column) {
-                var col = $('<th></th>');
-                col.text(column.label.toUpperCase());
-                column.center ? col.addClass('text-center') : '';
-                if (column.sortable) {
-                    col.addClass('sorting')
-                    col.bind('click.tablegrid.sorting', function () {
-                        if (obj.data('tablegrid').sort) {
-                            $thead.children('th[class*="sorting"]').each(function () {
-                                $(this).removeClass('sorting-desc').removeClass('sorting-asc').addClass('sorting');
-                            })
-                            if (obj.data('tablegrid').sort.field == column.field) {
-                                col.removeClass('sorting-desc').removeClass('sorting-asc');
-                                obj.data('tablegrid').sort.order == true ? obj.data('tablegrid').sort.order = false : obj.data('tablegrid').sort.order = true
-                                obj.data('tablegrid').sort.order == true ? col.addClass('sorting-asc') : col.addClass('sorting-desc');
-                            } else {
-                                obj.data('tablegrid').sort = {field: column.field, order: true};
-                                col.addClass('sorting-asc');
-                            }
-                        } else {
-                            obj.data('tablegrid').sort = {field: column.field, order: true};
-                            col.addClass('sorting-asc');
-                        }
-                        obj.tablegrid('sort');
-                    })
-                }
-                column.center ? col.addClass('text-center') : '';
-                $thead.append(col);
-            })
-            var $theadbox = $('<thead></thead>');
-            $theadbox.append($thead);
-            obj.append($theadbox);
-            var $tbody = $('<tbody></tbody>');
-            obj.append($tbody);
-            obj.data('tablegrid').options.databody = $tbody;
-            loadData(obj);
-        }
-        function loadData(obj) {
-            var options = obj.data('tablegrid').options;
-            if (options.href) {
-                obj.data('tablegrid').options.queryParams._page = {};
-                obj.data('tablegrid').options.queryParams._page['page'] = obj.data('tablegrid').page;
-                obj.data('tablegrid').options.queryParams._page['rows'] = obj.data('tablegrid').pagesize;
-                readData(obj);
-            } else {
-                obj.data('tablegrid').options.datajson = {total: options.data.length, rows: options.data, _type: 0}; //这里后期修改 目前传递的静态data格式必须是 [{},{}]
-                drawData(obj);
-            }
-            if (options.merge.key) {
-                var columns = options.columns;
-                var datas = options.dispalyData;
-                var mergeSet = options.merge;
-                var merges = mergeSet.merge;
-                merges.push(mergeSet.key);
-                $.unique(merges);
-                var tbody = obj.find('tbody');
-                if (datas.length) {
-                    var row = 0;
-                    var mergeCount = 1;
-                    $.each(datas, function (i, data) {
-                        if (i > 0) {
-                            if (data[mergeSet.key] == datas[row][mergeSet.key]) {
-                                mergeCount++;
-                                $.each(merges, function (m, merge) {
-                                    $.each(columns, function (c, col) {
-                                        if (col['field'] == merge) {
-                                            tbody.children('tr').eq(row).children('td').eq(c).attr('rowspan', mergeCount);
-                                            tbody.children('tr').eq(i).children('td').eq(c).addClass('pending-delete');
-                                        }
-                                    })
-                                })
-                            } else {
-                                row = i;
-                                mergeCount = 1;
-                            }
-                        }
-                    })
-                }
-                tbody.children('tr').children('td[class="pending-delete"]').remove();
-            }
-        }
-        function readData(obj) {
-            var options = obj.data('tablegrid').options;
-            if (obj.data('tablegrid').sort) {
-                if (!options.queryParams._sort) {
-                    options.queryParams._sort = {};
-                }
-                options.queryParams._sort['field'] = obj.data('tablegrid').sort.field;
-                options.queryParams._sort['order'] = obj.data('tablegrid').sort.order;
-            }
-            $.ajax({
-                type: options.ajaxMethod,
-                url: options.href,
-                data: options.queryParams,
-                async: false,
-                success: function (data) { //data as {total: x, rows:[{},{}]};
-                    obj.data('tablegrid').options.datajson = data;
-                    drawData(obj);
-                },
-                dataType: 'json'
-            });
-            return obj;
-        }
-        function drawData(obj) {
-            var options = obj.data('tablegrid').options;
-            var tbody = options.databody;
-            tbody.children().remove();
-            var datas = $.extend({_type: 1}, options.datajson);
-            var dispalyData = [];
-            var startRow = 1;
-            var endRow = datas.total;
-            if (obj.data('tablegrid').options.pagination) {
-                var page = obj.data('tablegrid').page;
-                var pagesize = obj.data('tablegrid').pagesize;
-                var total = datas.total;
-                var pages = Math.ceil(total / pagesize);
-                while (page > pages) {
-                    page--;
-                }
-                // 1*10?5  | 10>5  -> 0*10?5  | 0<5√  page=0
-                // 2*10?5  | 20>5  -> 1*10?5  | 10>5 -> 0*10?5 | 0<5√  page=0
-                // 1*10?10 | 10=10√  page=page
-                // 3*10?25 | 30>25 -> 2*10?25 | 20<25√  page=page-1
-                if (page == 0) {
-                    page = 1;
-                }
-                obj.data('tablegrid').page = page;
-                startRow = (page - 1) * pagesize;
-                endRow = page * pagesize;
-                endRow > total ? endRow = total : endRow = endRow;
-                if (datas._type == 0) {
-                    for (var i = startRow; i < endRow; i++) {
-                        dispalyData.push(datas.rows[i])
-                    }
-                } else {
-                    dispalyData = datas.rows;
-                }
-                initpagination(obj, page, pages);
-            } else {
-                dispalyData = datas.rows;
-            }
-            obj.data('tablegrid').options.dispalyData = dispalyData;
-            if (options.datainfo) {
-                var shows = startRow + 1;
-                $('#' + obj.attr('id') + '-wrap-datainfo').html('Display ' + (startRow + 1) + ' to ' + endRow + ' of ' + total);
-            }
-            $.each(dispalyData, function (i, row) {
-                var rowTr = $('<tr></tr>');
-                $.each(options.columns, function (k, column) {
-                    var col = $('<td></td>');
-                    var tdHtml = row[column.field];
-                    if (column.formatter) {
-                        tdHtml = column.formatter(row[column.field], i, row);
-                    }
-                    column.center ? col.addClass('text-center') : '';
-                    col.html(tdHtml);
-                    rowTr.append(col);
-                })
-                tbody.append(rowTr);
-            });
-            return obj;
-        }
-        function initpagination(obj, page, pages) {
-            var wrapid = obj.attr('id') + '-wrap';
-            var options = obj.data('tablegrid').options;
-            //console.info(options.pagesize.length);
-            var pagination = $('<ul id="' + wrapid + '-pagination" class="tablegrid-wrap-pagination ' + options.paginationClass + '"></ul>');
-            if ($('#' + wrapid + '-pagination').length == 0) {
-                if (options.paginationRender) {
-                    $('#' + wrapid + '-' + options.paginationRender).append(pagination);
-                    $('#' + wrapid + '-' + options.paginationRender).addClass(options.paginationBoxClass);
-                } else {
-                    $('#' + wrapid + '-footer').append(pagination);
-                }
-            } else {
-                pagination = $('#' + wrapid + '-pagination');
-                pagination.children().remove();
-            }
-            if (options.pagesize.length > 1) {
-                var selet = $('<select class="form-control"></select>');
-                for (var i = 1; i < options.pagesize.length; i++) {
-                    selet.append('<option value="' + options.pagesize[i] + '">' + options.pagesize[i] + '条</option>');
-                }
-                selet.val(obj.data('tablegrid').pagesize);
-                selet.change(function () {
-                    obj.data('tablegrid').pagesize = parseInt($(this).val());
-                    loadData(obj);
-                });
-                pagination.append('<li>每页显示：</li>');
-                pagination.append(selet);
-                selet.wrap('<li class="pagesize"></li>')
-            }
-            if (pages > 1) {
-                var fpbtn = $('<li><a href="javascript:;"><span class="glyphicon glyphicon-step-backward"></span></a></li>');
-                var prebtn = $('<li><a href="javascript:;"><span class="glyphicon glyphicon-chevron-left"></span></a></li>');
-                var nextbtn = $('<li><a href="javascript:;"><span class="glyphicon glyphicon-chevron-right"></span></a></li>');
-                var epbtn = $('<li><a href="javascript:;"><span class="glyphicon glyphicon-step-forward"></span></a></li>');
-                if (page == 1) {
-                    fpbtn.addClass('disabled');
-                    prebtn.addClass('disabled');
-                } else {
-                    fpbtn.bind('click.tablegrid.loadpage', function () {
-                        obj.data('tablegrid').page = 1;
-                        loadData(obj);
-                    })
-                    prebtn.bind('click.tablegrid.loadpage', function () {
-                        obj.data('tablegrid').page = page - 1;
-                        loadData(obj);
-                    })
-                }
-                pagination.append(fpbtn).append(prebtn);
-
-                var pageSet = {sPage: 1, ePage: pages};
-                if (pages - 1 > options.paginationBtns * 2) {
-                    pageSet = pageCal(page, pages, options.paginationBtns)
-                }
-
-                for (var i = pageSet.sPage; i <= pageSet.ePage; i++) {
-                    var pagebtn = $('<li><a href="javascript:;">' + i + '</a></li>');
-                    if (obj.data('tablegrid').page == i) {
-                        pagebtn.addClass('current');
-                    } else {
-                        pagebtn.bind('click.tablegrid.loadpage', function () {
-                            obj.data('tablegrid').page = parseInt($(this).text());
-                            loadData(obj);
-                        })
-                    }
-                    pagination.append(pagebtn);
-                }
-
-                if (page == pages) {
-                    nextbtn.addClass('disabled');
-                    epbtn.addClass('disabled');
-                } else {
-                    nextbtn.bind('click.tablegrid.loadpage', function () {
-                        obj.data('tablegrid').page = page + 1;
-                        loadData(obj);
-                    })
-                    epbtn.bind('click.tablegrid.loadpage', function () {
-                        obj.data('tablegrid').page = pages;
-                        loadData(obj);
-                    })
-                }
-                pagination.append(nextbtn).append(epbtn);
-            }
-        }
-        function pageCal(page, pages, len, alen) {
-            var sPage = page - len;
-            if (alen) {
-                sPage = sPage - alen;
-            }
-            if (sPage <= 0) {
-                sPage = 1;
-            }
-            var extE = len + sPage - page;
-            var ePage = page + len + extE;
-            if (ePage > pages) {
-                ePage = pages;
-            }
-            var extS = len + page - ePage;
-            if (extS && alen == undefined) {
-                return pageCal(page, pages, len, extS);
-            } else {
-                return {sPage: sPage, ePage: ePage};
-            }
-        }
-        function initwrap(obj, wrapid) {
-            obj.wrap('<div id="' + wrapid + '" class="tablegrid-wrap"></div>');
-            $('#' + wrapid).prepend('<div id="' + wrapid + '-header" class="tablegrid-wrap-header"></div><div id="' + wrapid + '-toolbar" class="tablegrid-wrap-toolbar"></div>');
-            obj.wrap('<div id="' + wrapid + '-grid" class="tablegrid-wrap-grid"></div>');
-            $('#' + wrapid).append('<div id="' + wrapid + '-footer" class="tablegrid-wrap-footer"></div>');
-            return obj;
-        }
-        function initrepale(obj, wrapid) {
-            obj.replaceWith('<div id="' + wrapid + '" class="tablegrid-wrap"></div>');
-            var _this = $('#' + wrapid);
-            _this.append('<div id="' + wrapid + '-header" class="tablegrid-wrap-header"></div><div id="' + wrapid + '-toolbar" class="tablegrid-wrap-toolbar"></div>');
-            _this.append('<div id="' + wrapid + '-grid" class="tablegrid-wrap-grid"><table id="' + obj.attr('id') + '"></table></div>');
-            _this.append('<div id="' + wrapid + '-footer" class="tablegrid-wrap-footer"></div>');
-            return $('#' + obj.attr('id'));
-        }
-        function initColumns(trs) {
-            var columns = [];
-            if (trs.length > 0) {
-                var cols = $(trs[0]).children('td,th');
-                $.each(cols, function (i, col) {
-                    var temp = {};
-                    $(col).data('field') ? temp.field = $(col).data('field').toLowerCase() : temp.field = $(col).text().toLowerCase();
-                    if (temp.field) {
-                        $(col).data('label') ? temp.label = $(col).data('label') : temp.label = temp.field;
-                        $(col).data('width') ? temp.width = $(col).data('width') : temp.width = 50;
-                        $(col).data('center') == true ? temp.center = true : temp.center = false;
-                        $(col).data('sortable') == true ? temp.sortable = true : temp.sortable = false;
-                        $(col).data('formatter') ? temp.formatter = eval($(col).data('formatter')) : temp.formatter = '';
-                    } else {
-                        delete temp.field;
-                    }
-                    columns.push(temp);
-                });
-            }
-            return columns;
-        }
-        function initDatas(columns, trs) {
-            var datas = [];
-            if (trs.length > 1) {
-                for (var i = 1; i < trs.length; i++) {
-                    var cols = $(trs[i]).children('td,th');
-                    datas[i - 1] = {};
-                    $.each(columns, function (k, column) {
-                        if (column['field']) {
-                            datas[i - 1][column['field']] = $(cols[k]).text();
-                        }
-                    })
-                }
-            }
-            return datas;
-        }
-        //Public method
-        var methods = {
-            init: function (options) {
-                var data = this.data('tablegrid');
-                var settings = {
-                    header: true, //显示头部
-                    footer: true, //显示表尾
-                    wrapClass: 'row',
-                    Class: '',
-                    headClass: 'row', //头部样式
-                    toolbarClass: 'row', //工具栏样式
-                    gridClass: 'row', //表格部分外部样式
-                    footerClass: 'row', //表尾样式
-                    pagination: false, //是否分页
-                    pagesize: [10, 10, 25, 50, 100], //每页数量
-                    paginationClass: '',
-                    paginationBtns: 3, //左右最多显示多少个按钮
-                    paginationRender: '',
-                    paginationRenderClass: '',
-                    datainfo: true,
-                    datainfoClass: '',
-                    datainfoRender: '',
-                    datainfoRenderClass: '',
-                    columns: [], //栏目
-                    response: false, //是否动态变化
-                    buttons: [], //自定义按钮
-                    btnBoxClass: '',
-                    btnRender: '',
-                    btnRenderClass: '',
-                    toolbar: [], //工具栏
-                    href: '',
-                    ajaxMethod: 'post',
-                    queryParams: {},
-                    data: [],
-                    merge: {}
-                };
-                var wrapid = this.attr('id') + '-wrap';
-                if (this.is('table')) {
-                    var tbody = this.children('thead,tbody');
-                    var trs = tbody.children('tr');
-                    if (options.columns == undefined) {
-                        var columns = initColumns(trs);
-                        settings.columns = columns;
-                        settings.data = initDatas(settings.columns, trs);
-                    }
-                    settings.columns = $.grep(settings.columns, function (n) {
-                        return !$.isEmptyObject(n);
-                    });
-                }
-                settings = $.extend(settings, options);
-                var _this = this;
-                if (settings['columns'].length) {
-                    this.is('table') ? _this = initwrap(this, wrapid) : _this = initrepale(this, wrapid);
-                    if (!data) {
-                        _this.data('tablegrid', {
-                            target: _this,
-                            tablegrid: true,
-                            options: settings,
-                            page: 1,
-                            pagesize: settings['pagesize'][0],
-                        });
-                    }
-                    initialization(_this, settings);
-                } else {
-                    console.info("$('#" + _this.attr('id') + "') init: failed");
-                }
-                return _this;
-            },
-            destroy: function () {
-                var data = this.data('tablegrid');
-                if (data) {
-                    var wrapid = this.attr('id') + '-wrap';
-                    $('#' + wrapid).remove();
-                }
-            },
-            sort: function () {
-                var options = this.data('tablegrid').options;
-                this.data('tablegrid').page = 1;
-                if (options.href) {
-                    loadData(this);
-                } else {
-                    var sortSet = this.data('tablegrid').sort;
-                    var datas = options.datajson.rows;
-                    this.data('tablegrid').options.datajson.rows = rowsort(datas, sortSet.field, sortSet.order);
-                    loadData(this);
-                }
-            },
-            reload: function () {
-
-            },
-            update: function () {
-
-            }
-        };
-        $.fn.tablegrid = function (method) {
-            if (methods[method]) {
-                return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-            } else if (typeof method === 'object' || !method) {
-                return methods.init.apply(this, arguments);
-            } else {
-                $.error('Method ' + method + ' does not exist on jQuery.tablegrid');
-            }
-        };
-    })(jQuery);
     $(function () {
-        $('#div').tablegrid({
-            Class: 'table table-striped table-bordered table-hover table-condensed',
-            pagination: true, //是否分页
-            responsive: true,
-            href: '/data.php',
-            paginationClass: 'col-md-6 col-sm-12',
-            paginationBtns: 2, //左右最多显示多少个按钮
-            datainfoClass: 'col-md-6 col-sm-12',
-            paginationClass: 'col-md-6 col-sm-12 text-right',
-            columns: [
-                {field: 'id', label: '编号', sortable: true},
-                {field: 'first_name', label: '姓', width: 100},
-                {field: 'last_name', label: '名', width: 100},
-                {field: 'position', label: '地址', width: 100},
-                {field: 'office', label: '工作地点', width: 100,formatter:formatter},
-                {field: 'start_date', label: '工作时间', width: 100},
-                {field: 'salary', label: '资金', width: 100},
-            ],
-            merge: {
-                key: 'office',
-                merge: ['first_name', 'last_name']
-            },
-            buttons: [
-                {name: 'Add', btnClass: 'btn-success btn-sm', action: _add},
-                {name: 'Update', btnClass: 'btn-info btn-sm', action: _update},
-                {name: 'Delete', btnClass: 'btn-danger btn-sm', action: _delete},
-            ],
-            btnBoxClass: 'col-md-12',
-        });
+        function _toggle() {
+            $('#div').tablegrid('toggle');
+        }
         function _add() {
             alert('Add');
         }
         function _update() {
-            alert('Update');
+            var index = $('#div').tablegrid('getSelectedRow')
+            var rowdata = $('#div').tablegrid('getRowData', index);
+            alert(JSON.stringify(rowdata))
         }
         function _delete() {
-            alert('Delete');
+            var index = $('#div').tablegrid('getSelectedRow');
+            var rowdata = $('#div').tablegrid('getRowData', index);
+            alert(JSON.stringify(rowdata))
+            //服务器删除数据
+            //
+            //服务器删除数据
+            $('#div').tablegrid('removeRow', index);
         }
-        $('#table').tablegrid({
+        function formatter(val, index, row) {
+            var btn = $('<a href="javascript:;" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-log-in"></i></a>');
+            btn.bind('click',function(){
+                alert(JSON.stringify(row))
+            })
+            return btn;
+        }
+        $('#addBtn').bind('click', _add);
+        $('#editBtn').bind('click', _update);
+        $('#removeBtn').bind('click', _delete);
+        $('#div').tablegrid({
+            title: 'Table with tools Table with tools Table with tools',
+            buttons: [
+                {name: '', btnClass: 'btn-link glyphicon glyphicon-refresh', action: function () {
+                        $('#div').tablegrid('reload');
+                    }
+                },
+                {name: '', btnClass: 'btn-link glyphicon glyphicon-chevron-down', action: _toggle},
+            ],
             Class: 'table table-striped table-bordered table-hover table-condensed',
             pagination: true, //是否分页
-            buttons: [
-                {name: 'Add', btnClass: 'btn-success btn-sm', action: _add},
-                {name: 'Update', btnClass: 'btn-info btn-sm', action: _update},
-                {name: 'Delete', btnClass: 'btn-danger btn-sm', action: _delete},
+            responsive: true,
+            href: '/tdata.php',
+            paginationBtns: 1, //左右最多各显示多少个按钮
+            columns: [
+                {field: 'id', label: '编号', center: true},
+                {field: 'first_name', label: '姓', width: 100},
+                {field: 'last_name', label: '名', width: 100},
+                {field: 'position', label: '地址', width: 100, center: true},
+                {field: 'office', label: '工作地点', width: 100},
+                {field: 'start_date', label: '工作时间', width: 100},
+                {field: 'salary', label: '资金', width: 100},
+                {field: 'oper', label: '操作', width: 50, center: true, formatter: formatter},
             ],
-            btnBoxClass: 'col-md-12',
+            merge: ['first_name', 'last_name'],
+            toolbar: '#toolbar',
+        });
+        $('#table').tablegrid({
+            title: 'Table',
+            responsive: true,
+            buttons: [
+                {name: '', btnClass: 'btn-link glyphicon glyphicon-plus', action: function () {
+                        alert('Add');
+                    }},
+                {name: '', btnClass: 'btn-link glyphicon glyphicon-edit', action: function () {
+                        alert('Update');
+                    }},
+                {name: '', btnClass: 'btn-link glyphicon glyphicon-remove', action: function () {
+                        alert('Delete');
+                    }},
+            ],
+            Class: 'table table-striped table-bordered table-hover table-condensed',
+            pagination: true, //是否分页
+            paginationBtns: 2, //左右最多各显示多少个按钮
         });
     })
 </script>

@@ -1,0 +1,173 @@
+/* Bootsharp CSS Copy*/
+.text-center{
+    text-align: center;
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+/* Bootsharp CSS End*/
+.tablegrid-wrap .tablegrid-wrap-grid{
+    border:3px solid #368ee0;
+    border-bottom: 0;
+    border-top:0;
+}
+.tablegrid-wrap .tablegrid-wrap-grid table{
+    margin: 0;
+    border:0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.tablegrid-wrap .tablegrid-wrap-grid table td{
+    vertical-align:  middle;
+    border-style: dotted;
+}
+.row.tablegrid-wrap{
+    margin: 0;
+    position: relative;
+    margin: 5px;
+}
+.row.tablegrid-wrap .row{
+    margin: 0;
+}
+.btn{
+    margin-left: 2px
+}
+.sorting{
+    user-select: none;
+    background: url(/Public/assets/images/sorting.png) no-repeat right;
+    cursor: pointer;
+    min-width: 60px;
+}
+.sorting-asc{
+    background:#ddd url(/Public/assets/images/sorting-asc.png) no-repeat right;
+}
+.sorting-desc{
+    background:#ddd url(/Public/assets/images/sorting-desc.png) no-repeat right;
+}
+.table .selected{
+    background: #ccc !important;
+}
+.tablegrid-wrap-processing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    margin-left: -100px;
+    margin-top: -26px;
+    text-align: center;
+    padding: 1em 0;
+    background-color: #fff;
+    border: 1px solid #368ee0;
+    border-radius: 4px;
+}
+.tablegrid-wrap-footer{
+    border: 3px solid #368ee0;
+    border-top:0
+}
+.tablegrid-wrap-header{
+    /*    border: 1px solid #368ee0;*/
+    border-bottom: 0;
+    height: 40px;
+    background: #368ee0;
+}
+.tablegrid-wrap-header h1{
+    margin: 0;
+    padding: 0 10px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 40px;
+    color: #fff;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.tablegrid-wrap-header .btn-link{
+    background: #368ee0;
+    text-decoration: none;
+    color: #fff;
+}
+.tablegrid-wrap-toolbar{
+    border: 3px solid #368ee0;
+    border-bottom: 0;
+    height: 40px;
+    padding: 5px 3px;
+}
+.tablegrid-wrap-toolbar .toolbar .btn{
+    height: 28px;
+    font-size: 14px;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 0;
+    color: #368ee0
+}
+.tablegrid-wrap-buttons{
+    height: 40px;
+    line-height: 40px;
+    padding:0 5px;
+    text-align: right
+}
+.tablegrid-wrap-pagination,.tablegrid-wrap-datainfo{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 40px;
+    line-height: 30px;
+    padding: 5px;
+    font-size: 12px;
+}
+.tablegrid-wrap-datainfo{
+
+}
+.tablegrid-wrap-pagination li{
+    padding: 0;
+    margin: 0;
+    display: inline-table;
+    margin-left: 2px;
+    border:1px solid #ccc;
+}
+.tablegrid-wrap-pagination li:first-child{
+    border:0;
+    margin-left: 0;
+}
+.tablegrid-wrap-pagination li a{
+    display: block;
+    height: 28px;
+    min-width: 28px;
+    line-height: 28px;
+    text-align: center;
+    text-decoration: none;
+    color: #368ee0;
+    font-size: 12px;
+}
+.tablegrid-wrap-pagination li.disabled a{
+    color: #ccc;
+    cursor:default
+}
+.tablegrid-wrap-pagination li.current a{
+    color: #fff;
+    background: #1b67af
+}
+.tablegrid-wrap-pagination .pagesize{
+    border:0
+}
+.tablegrid-wrap-pagination .pagesize select{
+    height: 30px;
+    line-height: 30px;
+    padding:0;
+    border-radius: 0;
+    font-size: 12px;
+}
+@media(max-width:992px) {
+    .tablegrid-wrap-pagination,.tablegrid-wrap-datainfo{
+        height:auto;
+        text-align: center;
+        padding:0
+    }
+    .tablegrid-wrap-pagination li{
+        margin-bottom: 2px;
+    }
+    .tablegrid-wrap-pagination li:first-child{
+        display: none;
+    }
+}
