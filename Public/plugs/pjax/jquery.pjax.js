@@ -190,6 +190,8 @@
     pjax.showFx = {
         "_default": function (data, callback, isCached) {
             data = $("<div>" + data + "</div>").find(pjax.options.container).html();
+//            console.info(this);
+//            console.info(data);
             this.html(data);
             callback && callback.call(this, data, isCached);
         },

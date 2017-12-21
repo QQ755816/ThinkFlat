@@ -18,34 +18,6 @@ function dropdownOpen(tag) {
         $(this).removeClass('open');
     });
 }
-$(function () {
-    if (isComputer()) {
-        $(document).off('li.click.bs.dropdown.data-api');
-        dropdownOpen('li');
-    }else{
-//        $('a.dropdown-toggle').bind('click.mobile',function(e){
-//            e.preventDefault();
-//            return false;
-//        })
-    }
-    $.pjax({
-        selector: 'a:not([href^="javascript"],[href^="#"],[class^="dropdown-toggle"])',
-        //selector: 'a',
-        container: '#main',
-        cache: false,
-        storage: false,
-        titleSuffix: '',
-        filter: function () {},
-        callback: function () {
-            if($('.toggle-nav:not([class*="toggle-sidenav"])').attr('aria-expanded')=='true'){
-                $('.toggle-nav:not([class*="toggle-sidenav"])').click();
-            }
-            resize();
-        }
-    });
-    resize();
-})
-
 function resize() {
     var winH = $(window).height();
     var winW = $(window).width();
@@ -54,7 +26,7 @@ function resize() {
     var pageHeadH = $('.page-header').outerHeight(true);
     var breadcrumbH = $('.breadcrumb').outerHeight(true);
     if (isComputer()) {
-        $('body').attr('scroll','no');
+        $('body').attr('scroll', 'no');
         $('.sidenav').height(winH - mainNavH);
         $('.main-area').width(winW - sideNavW - 10);
         $('.page-header').width(winW - sideNavW - 10);
@@ -64,4 +36,26 @@ function resize() {
         $('.sidenav').height('auto');
     }
 }
-window.onresize = resize;
+$(function () {
+    if (isComputer()) {
+        $(document).off('li.click.bs.dropdown.data-api');
+        dropdownOpen('li');
+    }
+    $.pjax({
+        selector: 'a:not([href^="javascript:;"],[href^="#"],[class^="dropdown-toggle"])',
+        container: '#main',
+        cache: false,
+        storage: false,
+        titleSuffix: '',
+        filter: function () {},
+        callback: function () {
+            $('#title').html($(document).attr("title"));
+            if ($('.toggle-nav:not([class*="toggle-sidenav"])').attr('aria-expanded') == 'true') {
+                $('.toggle-nav:not([class*="toggle-sidenav"])').click();
+            }
+            resize();
+        }
+    });
+    resize();
+    window.onresize = resize;
+})
