@@ -13,7 +13,8 @@
             function formatter(val, index, row) {
                 var btn = $('<a href="/certificates/certificate/id/' + row.id + '" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-log-in"></i></a>');
                 btn.bind('click', function () {
-                    console.info(JSON.stringify(row))
+                    console.info(JSON.stringify(row));
+                    return false;
                 })
                 return btn;
             }
@@ -32,12 +33,12 @@
                 paginationBtns: 1, //左右最多各显示多少个按钮
                 columns: [
                     {field: 'id', label: '编号', center: true},
+                    {field: 'status', label: '状态', width: 50, center: true, formatter: certstatus},
                     {field: 'createat', label: '创建时间', width: 100, center: true, formatter: timestampformat},
                     {field: 'certtype', label: '类型', width: 100, center: true, formatter: certtype},
                     {field: 'downstreams', label: '下游用户', width: 300, formatter: downstreams},
                     {field: 'coveryear', label: '涵盖年份', width: 100, center: true, sortable: true},
                     {field: 'substances', label: '物质信息', width: 300,formatter:certsubstances},
-                    {field: 'status', label: '状态', width: 50, center: true, formatter: certstatus},
                     {field: 'oper', label: '查看', width: 50, center: true, formatter: formatter},
                 ],
             });
