@@ -2,26 +2,17 @@
 
 namespace Home\Controller;
 
-use Think\Controller;
-
-class EmptyController extends Controller {
+class EmptyController extends CommonController {
 
     public function _empty() {
-        $this->assign('title',CONTROLLER_NAME);
-        if(is_pjax()){
-            $tpl = T('pjax/'.CONTROLLER_NAME.'/'.ACTION_NAME);
-            $this->assign('pjax',true);
-        }else{
-            $tpl = T(CONTROLLER_NAME.'/'.ACTION_NAME);
-        }
-        $this->assign('tpl',$tpl);
+        $this->assign('title', CONTROLLER_NAME);
         $this->display($tpl);
     }
-    
-    public function pjaxerror(){
+
+    public function pjaxerror() {
         $this->display(T('pjax/Index/error'));
     }
-    
+
     public function success() {
         echo '{"success": true}';
     }

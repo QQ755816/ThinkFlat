@@ -5,6 +5,12 @@ body{
     font-family: 'Microsoft YaHei','Open Sans', sans-serif;
     color: #666;
 }
+.certitem .label{
+    display: inline-block;
+    padding: 0 5px;
+    height: 25px;
+    line-height: 25px;
+}
 .pace-inactive{
     display: none;
 }
@@ -347,7 +353,7 @@ a,a:hover,a:active,a:link,a:visited{
 }
 .sidenav .subnav .subnav-title .toggle-subnav i {
     position: absolute;
-    left: 12px;
+    left: 10px;
     top: 6px;
     display: none;
 }

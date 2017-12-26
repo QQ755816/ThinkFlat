@@ -83,6 +83,7 @@
             var col = $('<th></th>');
             col.text(column.label.toUpperCase());
             column.center ? col.addClass('text-center') : '';
+            column.width ? col.attr('width', column.width) : col.attr('width', 50);
             if (column.sortable) {
                 col.addClass('sorting')
                 col.bind('click.tablegrid.sorting', function () {
@@ -145,11 +146,17 @@
             data: options.queryParams,
             async: false,
             success: function (data) { //data as {total: x, rows:[{},{}]};
+                console.info(data);
                 obj.data('tablegrid').options.datajson = data;
                 obj.data('tablegrid').options.data = data.rows;
                 drawData(obj);
             },
-            dataType: 'json'
+            dataType: 'json', 
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
         });
         return obj;
     }
@@ -219,7 +226,7 @@
             var datas = options.dispalyData;
             var merges = options.merge;
             $.unique(merges);
-            var tbody = obj.find('tbody');
+            var tbody = obj.children('tbody');
             if (datas.length) {
                 var row = 0;
                 var mergeCount = 1;
@@ -234,12 +241,12 @@
                         if (doMerge) {
                             mergeCount++;
                             $.each(columns, function (c, col) {
-                                if ($.inArray(col['field'],merges)!=-1) {
+                                if ($.inArray(col['field'], merges) != -1) {
                                     tbody.children('tr').eq(row).children('td').eq(c).attr('rowspan', mergeCount);
                                     tbody.children('tr').eq(i).children('td').eq(c).addClass('pending-delete');
                                 }
                             })
-                        }else{
+                        } else {
                             row = i;
                             mergeCount = 1;
                         }
@@ -248,7 +255,7 @@
             }
             tbody.children('tr').children('td[class="pending-delete"]').remove();
         }
-        var rows = obj.find('tbody').children('tr');
+        var rows = obj.children('tbody').children('tr');
         $.each(rows, function (i, row) {
             if (options.sigleSelect) {
                 $(row).bind('click.sigleselect', function () {
@@ -291,14 +298,14 @@
         if (options.pagesize.length > 1) {
             var selet = $('<select class="form-control"></select>');
             for (var i = 1; i < options.pagesize.length; i++) {
-                selet.append('<option value="' + options.pagesize[i] + '">' + options.pagesize[i] + '条</option>');
+                selet.append('<option value="' + options.pagesize[i] + '">' + options.pagesize[i] + '</option>'); //条
             }
             selet.val(obj.data('tablegrid').pagesize);
             selet.change(function () {
                 obj.data('tablegrid').pagesize = parseInt($(this).val());
                 loadData(obj);
             });
-            pagination.append('<li>每页显示：</li>');
+            //pagination.append('<li>每页显示：</li>');
             pagination.append(selet);
             selet.wrap('<li class="pagesize"></li>')
         }

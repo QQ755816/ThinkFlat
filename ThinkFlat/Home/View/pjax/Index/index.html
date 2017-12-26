@@ -5,54 +5,25 @@
     </ol>
     <div class="main-show">
         <div class="container-fluid">
-            <div id="div"></div>
-            <div id="toolbar" class="toolbar">
-                <button class="btn btn-default" id="addBtn"><span class="glyphicon glyphicon glyphicon-plus"></span>添加</button>
-                <button class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon glyphicon-edit"></span>修改</button>
-                <button class="btn btn-default" id="removeBtn"><span class="glyphicon glyphicon glyphicon-remove"></span>删除</button>
-            </div>
+            <div id="certificates"></div>
         </div>
     </div>
     <script>
         $(function () {
-            function _toggle() {
-                $('#div').tablegrid('toggle');
-            }
-            function _add() {
-                alert('Add');
-            }
-            function _update() {
-                var index = $('#div').tablegrid('getSelectedRow')
-                var rowdata = $('#div').tablegrid('getRowData', index);
-                console.info(JSON.stringify(rowdata))
-            }
-            function _delete() {
-                var index = $('#div').tablegrid('getSelectedRow');
-                var rowdata = $('#div').tablegrid('getRowData', index);
-                console.info(JSON.stringify(rowdata))
-                //服务器删除数据
-                //
-                //服务器删除数据
-                $('#div').tablegrid('removeRow', index);
-            }
             function formatter(val, index, row) {
-                var btn = $('<a href="/substance/prereg/id/'+row.id+'" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-log-in"></i></a>');
+                var btn = $('<a href="/certificates/certificate/id/' + row.id + '" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-log-in"></i></a>');
                 btn.bind('click', function () {
                     console.info(JSON.stringify(row))
                 })
                 return btn;
             }
-            $('#addBtn').bind('click', _add);
-            $('#editBtn').bind('click', _update);
-            $('#removeBtn').bind('click', _delete);
-            $('#div').tablegrid({
-                title: 'Table with tools Table with tools Table with tools',
+            $('#certificates').tablegrid({
+                title: 'Certificates',
                 buttons: [
                     {name: '', btnClass: 'btn-link glyphicon glyphicon-refresh', action: function () {
-                            $('#div').tablegrid('reload');
+                            $('#certificates').tablegrid('reload');
                         }
-                    },
-                    {name: '', btnClass: 'btn-link glyphicon glyphicon-chevron-down', action: _toggle},
+                    }
                 ],
                 Class: 'table table-striped table-bordered table-hover table-condensed',
                 pagination: true, //是否分页
@@ -61,16 +32,14 @@
                 paginationBtns: 1, //左右最多各显示多少个按钮
                 columns: [
                     {field: 'id', label: '编号', center: true},
-                    {field: 'first_name', label: '姓', width: 100},
-                    {field: 'last_name', label: '名', width: 100},
-                    {field: 'position', label: '地址', width: 100, center: true},
-                    {field: 'office', label: '工作地点', width: 100},
-                    {field: 'start_date', label: '工作时间', width: 100},
-                    {field: 'salary', label: '资金', width: 100},
-                    {field: 'oper', label: '操作', width: 50, center: true, formatter: formatter},
+                    {field: 'createat', label: '创建时间', width: 100, center: true, formatter: timestampformat},
+                    {field: 'certtype', label: '类型', width: 100, center: true, formatter: certtype},
+                    {field: 'downstreams', label: '下游用户', width: 300, formatter: downstreams},
+                    {field: 'coveryear', label: '涵盖年份', width: 100, center: true, sortable: true},
+                    {field: 'substances', label: '物质信息', width: 300,formatter:certsubstances},
+                    {field: 'status', label: '状态', width: 50, center: true, formatter: certstatus},
+                    {field: 'oper', label: '查看', width: 50, center: true, formatter: formatter},
                 ],
-                merge: ['first_name', 'last_name'],
-                toolbar: '#toolbar',
             });
         })
     </script>
