@@ -14,8 +14,8 @@ function certtype(val, index, row) {
 function certsubstances(val, index, row) {
     console.info(val)
     var $certsubstances = $('<table class="table table-bordered table-condensed"><tr><th>CAS</th><th>EC</th><th>EC Name</th><th>Tonnage</th><th>Use</th></tr></table>');
-    $.each(val,function(i,sub){
-        $certsubstances.append('<tr><td>'+sub.cas+'</td><td>'+sub.ec+'</td><td>'+sub.ecname+'</td><td>'+sub.tonnage+'</td><td>'+sub.use+'</td></tr>');
+    $.each(val, function (i, sub) {
+        $certsubstances.append('<tr><td>' + sub.cas + '</td><td>' + sub.ec + '</td><td>' + sub.ecname + '</td><td>' + sub.tonnage + '</td><td>' + sub.use + '</td></tr>');
     })
     return $certsubstances;
 }
@@ -87,7 +87,11 @@ function dropdownOpen(tag) {
         $(this).removeClass('open');
     });
 }
-function resize() {
+function adjustment() {
+    $('#title').html($(document).attr("title"));
+    if ($('.toggle-nav:not([class*="toggle-sidenav"])').attr('aria-expanded') == 'true') {
+        $('.toggle-nav:not([class*="toggle-sidenav"])').click();
+    }
     var winH = $(window).height();
     var winW = $(window).width();
     var sideNavW = $('.sidenav').outerWidth(true);
@@ -118,14 +122,9 @@ $(function () {
         titleSuffix: '',
         filter: function () {},
         callback: function () {
-            console.info('loadcomplete')
-            $('#title').html($(document).attr("title"));
-            if ($('.toggle-nav:not([class*="toggle-sidenav"])').attr('aria-expanded') == 'true') {
-                $('.toggle-nav:not([class*="toggle-sidenav"])').click();
-            }
-            resize();
+            adjustment();
         }
     });
-    resize();
-    window.onresize = resize;
+    adjustment();
+    window.onresize = adjustment;
 })

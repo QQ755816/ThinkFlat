@@ -57,4 +57,19 @@ class CommonController extends Controller {
         die();
     }
 
+    protected function _display() {
+        $this->display($this->tpl);
+    }
+
+    public function _empty() {
+        $this->assign('title', L('PAGENOTFOUND'));
+        if ($this->is_pjax()) {
+            $this->tpl = T('pjax/Error/404');
+            $this->assign('pjax', true);
+        } else {
+            $this->tpl = T('Error/404');
+        }
+        $this->_display();
+    }
+
 }
