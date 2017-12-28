@@ -11,22 +11,52 @@ function certtype(val, index, row) {
             break;
     }
 }
-function certsubstances(val, index, row) {
-    console.info(val)
-    var $certsubstances = $('<table class="table table-bordered table-condensed"><tr><th>CAS</th><th>EC</th><th>EC Name</th><th>Tonnage</th><th>Use</th></tr></table>');
-    $.each(val, function (i, sub) {
-        $certsubstances.append('<tr><td>' + sub.cas + '</td><td>' + sub.ec + '</td><td>' + sub.ecname + '</td><td>' + sub.tonnage + '</td><td>' + sub.use + '</td></tr>');
-    })
-    return $certsubstances;
-}
 function downstreams(val, index, row) {
-    var $downstreams = $('<table class="table table-bordered table-condensed"><tr><th>Type</th><th>Company</th></tr></table>');
-    $downstreams.append('<tr><td>Downstream User</td><td>Shandong Yanggu Huatai Chemical Co., Ltd.</td></tr>');
-    $downstreams.append('<tr><td>EU Importer</td><td>Tianjin Surfychem T&D Co., Ltd.</td></tr>');
+    var $downstreams = $('<table class="table table-bordered table-condensed"><tr><th width="130">Type</th><th>Company</th></tr></table>');
+    $.each(val, function (i, downstream) {
+        switch (parseInt(downstream.roletype)) {
+            case 1:
+                $downstreams.append('<tr><td>Manufacturer</td><td>' + downstream.company + '</td></tr>');
+                break;
+            case 2:
+                $downstreams.append('<tr><td>Downstream User</td><td><a href="/downstreams/id/' + downstream.compid + '">' + downstream.company + '</a></td></tr>');
+                break;
+            case 3:
+                $downstreams.append('<tr><td>EU Importer</td><td><a href="/downstreams/id/' + downstream.compid + '">' + downstream.company + '</a></td></tr>');
+                break;
+        }
+    })
     return $downstreams;
+}
+function certcard(val, index, row) {
+    var btn = $('<button class="btn btn-xs btn-info"><i class="glyphicon glyphicon-chevron-down"></i></button >');
+    btn.attr('expanded', 0);
+    btn.bind('click', function () {
+        var tr = $(this).parent().parent();
+        if ($(this).attr('expanded') == 0) {
+            $(this).attr('expanded', 1);
+            var colspan = tr.children('td').length;
+            var cardview = $('<table class="table table-bordered table-condensed"><tr><th>CAS</th><th>EC</th><th>EC Name</th><th>Type</th><th>Code</th><th>Tonnage</th><th>Use</th></tr></table>');
+            $.each(row.substances, function (i, sub) {
+                if (sub.regtype == 1) {
+                    cardview.append('<tr><td>' + sub.cas + '</td><td>' + sub.ec + '</td><td>' + sub.ecname + '</td><td>Reg</td><td><a href="/substances/id/' + sub.subid + '">' + sub.regcode + '</a></td><td>' + sub.ton + '</td><td>' + sub.tonuse + '</td></tr>');
+                } else {
+                    cardview.append('<tr><td>' + sub.cas + '</td><td>' + sub.ec + '</td><td>' + sub.ecname + '</td><td>Pre-Reg</td><td><a href="/substances/id/' + sub.subid + '">' + sub.regcode + '</a></td><td>' + sub.ton + '</td><td>' + sub.tonuse + '</td></tr>');
+                }
+            })
+            tr.after('<tr><td colspan=' + colspan + ' class="bg-success"></td></tr>').next().children('td').append(cardview);
+        } else {
+            $(this).attr('expanded', 0);
+            tr.next().remove();
+        }
+    })
+    return btn;
 }
 function certstatus(val, index, row) {
     switch (parseInt(val)) {
+        case 0:
+            return '<label class="label label-default">Unfinished</label>';
+            break;
         case 1:
             return '<label class="label label-info">CIRS Verification</label>';
             break;
@@ -38,9 +68,6 @@ function certstatus(val, index, row) {
             break;
         case 4:
             return '<label class="label label-danger">Invalid</label>';
-            break;
-        default:
-            return '<label class="label label-default">Unfinished</label>';
             break;
     }
 }

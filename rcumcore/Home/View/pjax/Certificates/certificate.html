@@ -1,7 +1,7 @@
 <if condition="$pjax"><title>{$title}</title></if>
 <div id="main">
     <ol class="breadcrumb">
-        <li class="active">{:L('CERTIFICATES')}</li>
+        <li class="active">Dashboard</li>
     </ol>
     <div class="main-show">
         <div class="container-fluid">
@@ -30,7 +30,7 @@
                 pagination: true, //是否分页
                 pagesize: [5, 5, 10, 25, 50, 100],
                 responsive: true,
-                href: "/Certificates/index",
+                href: "/{$Think.CONTROLLER_NAME}/{$Think.ACTION_NAME}",
                 paginationBtns: 1, //左右最多各显示多少个按钮
                 columns: [
                     {field: 'certno', label: '编号', width: 100, center: true, nowrap: true},

@@ -7,6 +7,10 @@
     margin-left: -15px;
 }
 /* Bootsharp CSS End*/
+.nowrap{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 .tablegrid-wrap .tablegrid-wrap-grid{
     border:3px solid #368ee0;
     border-bottom: 0;

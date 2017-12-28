@@ -10,7 +10,7 @@ class CertificatesModel extends CommonModel {
             'mapping_type' => self::HAS_MANY,
             'foreign_key' => 'certid',
             'mapping_key' => 'id',
-            'mapping_fields' => 'cas,ec,ecname,regtype,regcode,regdeadline,tonrange,ton,subuse,tonuse',
+            'mapping_fields' => 'subid,cas,ec,ecname,regtype,regcode,ton,tonuse',
             'mapping_order' => 'id asc'
         ),
         'downstreams' => array(
@@ -18,8 +18,9 @@ class CertificatesModel extends CommonModel {
             'mapping_type' => self::HAS_MANY,
             'foreign_key' => 'certid',
             'mapping_key' => 'id',
-            'mapping_fields' => 'roletype,compid,company,address,tel,fax,contacter,email',
-            'mapping_order' => 'id asc'
+            'mapping_fields' => 'roletype,compid,company',
+            'mapping_order' => 'id asc',
+            'condition'=>'compid <> ""'
         )
     );
     protected $insertFields = array('createat', 'compid', 'certuuid', 'certtype', 'certno', 'year', 'month', 'extendtype', 'extendinfo', 'status', 'step', 'remark', 'file', 'rejectby');

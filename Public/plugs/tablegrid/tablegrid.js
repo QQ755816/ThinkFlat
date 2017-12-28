@@ -83,6 +83,7 @@
             var col = $('<th></th>');
             col.text(column.label.toUpperCase());
             column.center ? col.addClass('text-center') : '';
+            column.nowrap ? col.addClass('nowrap') : '';
             column.width ? col.attr('width', column.width) : col.attr('width', 50);
             if (column.sortable) {
                 col.addClass('sorting')
@@ -106,7 +107,6 @@
                     obj.tablegrid('sort');
                 })
             }
-            column.center ? col.addClass('text-center') : '';
             $thead.append(col);
         })
         var $theadbox = $('<thead></thead>');
@@ -128,8 +128,8 @@
         } else {
             obj.data('tablegrid').options.datajson = {total: options.data.length, rows: options.data, _type: 0}; //这里后期修改 目前传递的静态data格式必须是 [{},{}]
             drawData(obj);
+            $('#' + obj.attr('id') + '-wrap-processing').fadeOut(500);
         }
-        $('#' + obj.attr('id') + '-wrap-processing').fadeOut(500);
     }
     function readData(obj) {
         var options = obj.data('tablegrid').options;
@@ -144,12 +144,12 @@
             type: options.ajaxMethod,
             url: options.href,
             data: options.queryParams,
-            async: false,
+            //async: false,
             success: function (data) { //data as {total: x, rows:[{},{}]};
-                console.info(data);
                 obj.data('tablegrid').options.datajson = data;
                 obj.data('tablegrid').options.data = data.rows;
                 drawData(obj);
+                $('#' + obj.attr('id') + '-wrap-processing').fadeOut(500);
             },
             dataType: 'json', 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -216,6 +216,7 @@
                     tdHtml = column.formatter(row[column.field], i, row);
                 }
                 column.center ? col.addClass('text-center') : '';
+                column.nowrap ? col.addClass('nowrap') : '';
                 col.html(tdHtml);
                 rowTr.append(col);
             })
@@ -277,6 +278,7 @@
                 }
             })
         })
+        options.callback();
         return obj;
     }
     function initpagination(obj, page, pages) {
@@ -411,6 +413,7 @@
                     $(col).data('center') == true ? temp.center = true : temp.center = false;
                     $(col).data('sortable') == true ? temp.sortable = true : temp.sortable = false;
                     $(col).data('formatter') ? temp.formatter = eval($(col).data('formatter')) : temp.formatter = '';
+                    $(col).data('nowrap') ? temp.nowrap = true : temp.nowrap = false;
                 } else {
                     delete temp.field;
                 }
@@ -472,7 +475,8 @@
                 ajaxMethod: 'post', //读取方式 post get
                 queryParams: {}, //传递参数
                 data: [], //静态数据 [{},{},{}]
-                merge: []//合并单元格 ['first_name', 'last_name'] 如果设置多个字段 全部相等才会合并
+                merge: [],//合并单元格 ['first_name', 'last_name'] 如果设置多个字段 全部相等才会合并
+                callback:function(){},
             };
             var wrapid = this.attr('id') + '-wrap';
             if (this.is('table')) {
