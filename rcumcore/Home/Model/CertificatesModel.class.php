@@ -18,7 +18,7 @@ class CertificatesModel extends CommonModel {
             'mapping_type' => self::HAS_MANY,
             'foreign_key' => 'certid',
             'mapping_key' => 'id',
-            'mapping_fields' => 'roletype,compid,company',
+            'mapping_fields' => 'roletype,compid,company,address,contacter,tel,fax,email',
             'mapping_order' => 'id asc',
             'condition'=>'compid <> ""'
         )

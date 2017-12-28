@@ -1,3 +1,4 @@
+var confirm;
 function certtype(val, index, row) {
     switch (parseInt(val)) {
         case 1:
@@ -150,6 +151,7 @@ $(function () {
         filter: function () {},
         callback: function () {
             adjustment();
+            confirm.close();
         }
     });
     adjustment();

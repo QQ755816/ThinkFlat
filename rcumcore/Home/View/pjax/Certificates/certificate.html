@@ -1,57 +1,166 @@
 <if condition="$pjax"><title>{$title}</title></if>
 <div id="main">
     <ol class="breadcrumb">
-        <li class="active">Dashboard</li>
+        <li><a href="/">{:L('DASHBOARD')}</a></li>
+        <li><a href="/Certificates">{:L('CERTIFICATES')}</a></li>
+        <li class="active">{:L('CERTIFICATE')}</li>
     </ol>
     <div class="main-show">
         <div class="container-fluid">
-            <div id="certificates"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-condensed certtable">
+                            <tr><th colspan="5" class="head">{:L('CERTINFO')}</th></tr>
+                            <tr><th>Cover Year&Month</th><td colspan="4">{$certificate.certyear}</td></tr>
+                            <tr><th>Type</th><td colspan="4">{$certificate.certtype|certtype}</td></tr>
+                            <tr><th>Status</th><td colspan="4">{$certificate.step|certstatus}</td></tr>
+                            <if condition="$manufacturer">
+                                <tr><th colspan="5" class="head">{:L('manufacturerINFO')}</th></tr>
+                                <tr>
+                                    <th rowspan="4" width="200">{:L('manufacturer')}</th>
+                                    <th width="100">Company</th>
+                                    <td colspan="3">{$manufacturer.company}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td colspan="3">{$manufacturer.address}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tel</th>
+                                    <td>{$manufacturer.tel}</td>
+                                    <th width="100">Fax</th>
+                                    <td>{$manufacturer.fax}</td>
+                                </tr>
+                                <tr>
+                                    <th>Contact person</th>
+                                    <td>{$manufacturer.contacter}</td>
+                                    <th>Email</th>
+                                    <td>{$manufacturer.email}</td>
+                                </tr>
+                            </if>
+                            <if condition="$downstream">
+                                <tr><th colspan="5" class="head">{:L('DownstreamINFO')}</th></tr>
+                                <tr>
+                                    <th rowspan="4" width="200">{:L('Downstream')}</th>
+                                    <th width="100">Company</th>
+                                    <td colspan="3">{$downstream.company}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td colspan="3">{$downstream.address}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tel</th>
+                                    <td>{$downstream.tel}</td>
+                                    <th width="100">Fax</th>
+                                    <td>{$downstream.fax}</td>
+                                </tr>
+                                <tr>
+                                    <th>Contact person</th>
+                                    <td>{$downstream.contacter}</td>
+                                    <th>Email</th>
+                                    <td>{$downstream.email}</td>
+                                </tr>
+                            </if>
+                            <if condition="$euimporter">
+                                <tr><th colspan="5" class="head">{:L('euimporterINFO')}</th></tr>
+                                <tr>
+                                    <th rowspan="4" width="200">{:L('euimporter')}</th>
+                                    <th width="100">Company</th>
+                                    <td colspan="3">{$euimporter.company}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td colspan="3">{$euimporter.address}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tel</th>
+                                    <td>{$euimporter.tel}</td>
+                                    <th width="100">Fax</th>
+                                    <td>{$euimporter.fax}</td>
+                                </tr>
+                                <tr>
+                                    <th>Contact person</th>
+                                    <td>{$euimporter.contacter}</td>
+                                    <th>Email</th>
+                                    <td>{$euimporter.email}</td>
+                                </tr>
+                            </if>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <switch name="$certificate['step']" >
+            <case value="0">
+                <h1>{$certificate.certno}</h1>
+                <div class="row">
+
+                </div>
+            </case>
+            <case value="1|2|4">
+                <h1>{$certificate.certno}</h1>
+            </case>
+            <case value="3">
+                <div class="certificate">
+                    <div class="certificate-page">
+                        <div class="certificate-head">
+                            <div class="certificate-logo"></div>
+                            <div class="certificate-certno">
+                                <table>
+                                    <tr><th>Certificate No. : </th><td>{$certificate.certno}</td></tr>
+                                    <tr><th>Valid for year  : </th><td>{$certificate.certyear}</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="compliance">
+                            <div>REACH Certificate of Compliance</div>
+                            <if condition="$certificate['certtype'] eq 1">
+                                <div>In compliance with the article 8 of the Regulation (EC) 1907/2006 of 18th December 2006 concerning the registration, evaluation, authorization and restriction of Chemicals (REACH), we hereby confirm that the non-EU manufacturer:</div>
+                                <div style="font-weight:bold; text-decoration:underline">{$manufacturer['company']}</div>
+                                <div>having its principal place of business at</div>
+                                <div style="font-weight:bold; text-decoration:underline">{$manufacturer['address']}</div>
+                                <div>has appointed</div>
+                                <div style="font-weight:bold; text-decoration:underline">Chemical Inspection and Regulation Service Limited</div>
+                                <div>having its principal place of business at</div>
+                                <div style="font-weight:bold; text-decoration:underline">Unit 1 Ardee Business Park, Hale Street, Ardee,Co. Louth, Ireland</div>
+                                <div>as its Only Representative for REACH compliance of the following substances:</div>
+                            </if>
+                            <if condition="$certificate['certtype'] eq 2">
+                                <div>In compliance with the article 8 of the Regulation (EC) 1907/2006 of 18th December 2006 concerning the registration, evaluation, authorization and restriction of Chemicals (REACH), we hereby confirm that the non-EU manufacturer <b style="text-decoration:underline">{$manufacturer['company']}</b> that is a supplier of the following non-EU entity:</div>
+                                <div style="font-weight:bold; text-decoration:underline">{$downstream['company']}</div>
+                                <div>having its principal place of business at</div>
+                                <div style="font-weight:bold; text-decoration:underline">{$downstream['address']}</div>
+                                <div>has appointed</div>
+                                <div style="font-weight:bold; text-decoration:underline">Chemical Inspection and Regulation Service Limited</div>
+                                <div>having its principal place of business at</div>
+                                <div style="font-weight:bold; text-decoration:underline">Unit 1 Ardee Business Park, Hale Street, Ardee,Co. Louth, Ireland</div>
+                                <div>as its Only Representative for REACH compliance of the following substances:</div>
+                            </if>
+                            <if condition="$certificate['certtype'] eq 3">
+                                <div>In compliance with the article 8 of the Regulation (EC) 1907/2006 of 18th December 2006 concerning the registration, evaluation, authorization and restriction of Chemicals (REACH), we hereby confirm that the non-EU manufacturer that is a supplier of the following non-EU entity:</div>
+                                <div style="font-weight:bold; text-decoration:underline">****************************</div>
+                                <div>having its principal place of business at</div>
+                                <div style="font-weight:bold; text-decoration:underline">****************************</div>
+                                <div>has appointed</div>
+                                <div style="font-weight:bold; text-decoration:underline">Chemical Inspection and Regulation Service Limited</div>
+                                <div>having its principal place of business at</div>
+                                <div style="font-weight:bold; text-decoration:underline">Unit 1 Ardee Business Park, Hale Street, Ardee,Co. Louth, Ireland</div>
+                                <div>as its Only Representative for REACH compliance of the following substances:</div>
+                            </if>
+                        </div>
+                    </div>
+                    <div class="certificate-page">
+
+                    </div>
+                </div>
+            </case>
+            </switch>
         </div>
     </div>
     <script>
         $(function () {
-            function formatter(val, index, row) {
-                var btn = $('<a href="/certificates/certificate/id/' + row.id + '" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-log-in"></i></a>');
-                btn.bind('click', function () {
-                    console.info(JSON.stringify(row));
-                    return false;
-                })
-                return btn;
-            }
-            $('#certificates').tablegrid({
-                title: 'Certificates',
-                buttons: [
-                    {name: '', btnClass: 'btn-link glyphicon glyphicon-refresh', action: function () {
-                            $('#certificates').tablegrid('reload');
-                        }
-                    }
-                ],
-                Class: 'table table-striped table-bordered table-hover table-condensed',
-                pagination: true, //是否分页
-                pagesize: [5, 5, 10, 25, 50, 100],
-                responsive: true,
-                href: "/{$Think.CONTROLLER_NAME}/{$Think.ACTION_NAME}",
-                paginationBtns: 1, //左右最多各显示多少个按钮
-                columns: [
-                    {field: 'certno', label: '编号', width: 100, center: true, nowrap: true},
-                    {field: 'step', label: '状态', width: 100, center: true, formatter: certstatus},
-                    {field: 'createat', label: '创建时间', width: 100, center: true, formatter: timestampformat},
-                    {field: 'certtype', label: '类型', width: 100, center: true, formatter: certtype},
-                    {field: 'downstreams', label: '相关信息', width: 300, formatter: downstreams},
-                    {field: 'certyear', label: '涵盖年份', width: 100, center: true, formatter: function (val, index, row) {
-                            if (row.certmonth != 0) {
-                                return val + ' [ ' + row.certmonth + ' ] ';
-                            }
-                            return val;
-                        }
-                    },
-                    {field: 'view', label: '物质', width: 50, center: true, formatter: certcard},
-                    {field: 'oper', label: '查看', width: 50, center: true, formatter: formatter},
-                ],
-                callback: function () {
-                    $('.main-show').perfectScrollbar('update');
-                },
-            });
+
         })
     </script>
 </div>

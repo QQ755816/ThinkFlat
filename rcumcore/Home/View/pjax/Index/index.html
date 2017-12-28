@@ -1,23 +1,34 @@
 <if condition="$pjax"><title>{$title}</title></if>
 <div id="main">
     <ol class="breadcrumb">
-        <li class="active">{:L('CERTIFICATES')}</li>
+        <li class="active">{:L('DASHBOARD')}</li>
     </ol>
     <div class="main-show">
         <div class="container-fluid">
             <div id="certificates"></div>
+            <div id="toolbar" class="toolbar">
+                <button class="btn btn-default" id="addCert"><span class="glyphicon glyphicon glyphicon-plus"></span>添加</button>
+            </div>
         </div>
     </div>
     <script>
         $(function () {
-            function formatter(val, index, row) {
-                var btn = $('<a href="/certificates/certificate/id/' + row.id + '" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-log-in"></i></a>');
-                btn.bind('click', function () {
-                    console.info(JSON.stringify(row));
-                    return false;
-                })
-                return btn;
-            }
+            $('#addCert').bind('click', function () {
+                confirm = $.confirm({
+                    icon: 'glyphicon glyphicon-question-sign',
+                    title: "{:L('CHOICECERTTYPE')}",
+                    content: '<a class="btn btn-primary btn-block" href="/certificates/add/type/direct">{:L("CERTDIRECT")}</a>' +
+                            '<a class="btn btn-primary btn-block" href="/certificates/add/type/threeparty">{:L("CERTTJREEPARTY")}</a>' +
+                            '<a class="btn btn-primary btn-block" href="/certificates/add/type/indirect">{:L("CERTINDIRECT")}</a>',
+                    theme: 'modern',
+                    closeIcon: true,
+                    animation: 'scale',
+                    type: 'blue',
+                    buttons: {
+                        Cancel: {}
+                    }
+                });
+            })
             $('#certificates').tablegrid({
                 title: 'Certificates',
                 buttons: [
@@ -33,12 +44,12 @@
                 href: "/Certificates/index",
                 paginationBtns: 1, //左右最多各显示多少个按钮
                 columns: [
+                    {field: 'createat', label: '创建时间', width: 100, center: true, nowrap: true, formatter: timestampformat},
                     {field: 'certno', label: '编号', width: 100, center: true, nowrap: true},
-                    {field: 'step', label: '状态', width: 100, center: true, formatter: certstatus},
-                    {field: 'createat', label: '创建时间', width: 100, center: true, formatter: timestampformat},
                     {field: 'certtype', label: '类型', width: 100, center: true, formatter: certtype},
+                    {field: 'step', label: '状态', width: 100, center: true, formatter: certstatus},
                     {field: 'downstreams', label: '相关信息', width: 300, formatter: downstreams},
-                    {field: 'certyear', label: '涵盖年份', width: 100, center: true, formatter: function (val, index, row) {
+                    {field: 'certyear', label: '涵盖年[月]', width: 100, center: true, formatter: function (val, index, row) {
                             if (row.certmonth != 0) {
                                 return val + ' [ ' + row.certmonth + ' ] ';
                             }
@@ -46,11 +57,15 @@
                         }
                     },
                     {field: 'view', label: '物质', width: 50, center: true, formatter: certcard},
-                    {field: 'oper', label: '查看', width: 50, center: true, formatter: formatter},
+                    {field: 'oper', label: '查看', width: 50, center: true, formatter: function (val, index, row) {
+                            return '<a href="/certificates/certificate/id/' + row.id + '" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-log-in"></i></a>'
+                        }
+                    },
                 ],
                 callback: function () {
                     $('.main-show').perfectScrollbar('update');
                 },
+                toolbar: '#toolbar',
             });
         })
     </script>

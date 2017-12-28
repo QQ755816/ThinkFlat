@@ -4,7 +4,7 @@ namespace Home\Controller;
 
 class CertificatesController extends CommonController {
 
-    public function index($type = 0, $title = CONTROLLER_NAME) {
+    public function index($type = 0, $title = '') {
         if (IS_POST) {
             $fields = array(
                 'id',
@@ -36,8 +36,30 @@ class CertificatesController extends CommonController {
 
     public function certificate() {
         $id = I('get.id');
-        $certificate = D('Certificates')->where($map)->find($id);
+        $certificate = D('Certificates')->relation(true)->where($map)->find($id);
         $this->assign('certificate', $certificate);
+        foreach ($certificate['downstreams'] as $key=>$downstream) {
+            if($downstream['roletype']==1){
+                $this->assign('manufacturer', $downstream);
+            }
+            if($downstream['roletype']==2){
+                $this->assign('downstream', $downstream);
+            }
+            if($downstream['roletype']==3){
+                $this->assign('euimporter', $downstream);
+            }
+        }
+        switch ($certificate['certtype']){
+            case 1:
+                $this->assign('title', L('CERTDIRECT'));
+                break;
+            case 2:
+                $this->assign('title', L('CERTTJREEPARTY'));
+                break;
+            case 3:
+                $this->assign('title', L('CERTINDIRECT'));
+                break;
+        }
         $this->_display();
     }
 

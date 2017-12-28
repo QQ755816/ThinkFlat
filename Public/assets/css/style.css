@@ -485,7 +485,7 @@ a,a:hover,a:active,a:link,a:visited{
 #main .main-show{
     position:relative;
     border:1px solid #eee;
-    overflow: hidden;
+    overflow: auto;
     padding: 5px;
     border-radius: 5px;
     height: 200px;
@@ -497,4 +497,72 @@ a,a:hover,a:active,a:link,a:visited{
     #main .main-show .container-fluid{
         padding: 0;
     }
+}
+.jconfirm .jconfirm-box div.jconfirm-content-pane .jconfirm-content{
+    overflow:visible
+}
+.certificate .certificate-page{
+    border:2px solid #ccc;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 1cm;
+    overflow: auto;
+    height: 27.7cm;
+    width: 19cm;
+    float: left;
+}
+.certificate-head{
+    height: 76px;
+}
+.certificate .certificate-logo{
+    background: url(../pdf/logo.gif) no-repeat;
+    width: 200px;
+    height: 76px;
+    float: left;
+}
+.certificate .certificate-logo{
+    background: url(../pdf/logo.gif) no-repeat;
+    width: 200px;
+    height: 76px;
+    float: left;
+}
+.certificate .certificate-certno{
+    background: none;
+    float: right;
+}
+.certificate .certificate-certno table{
+    border:0;
+}
+.certificate .certificate-certno th{
+    text-align: right;
+    padding: 2px
+}
+.certificate .certificate-certno td{
+    padding: 2px
+}
+.certificate .compliance{
+    clear: both;
+}
+.certificate .compliance div{
+    margin: 10px;
+}
+.certificate .compliance div:first-child{
+    text-align: center;
+    font-size: 20px;
+}
+.certtable{
+    margin:10px 0
+}
+.certtable th{
+    font-weight: 600;
+    width: 100px; 
+    white-space: nowrap;
+    text-align: right;
+    vertical-align: middle !important;
+}
+.certtable th.head{
+    background: #368ee0;
+    border-color: #368ee0;
+    color: #fff;
+    text-align: left;
 }

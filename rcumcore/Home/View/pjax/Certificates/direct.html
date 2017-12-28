@@ -8,18 +8,13 @@
     <div class="main-show">
         <div class="container-fluid">
             <div id="certificates"></div>
+            <div id="toolbar" class="toolbar">
+                <a class="btn btn-default" href="/certificates/add/type/direct"><span class="glyphicon glyphicon glyphicon-plus"></span>添加</a>
+            </div>
         </div>
     </div>
     <script>
         $(function () {
-            function formatter(val, index, row) {
-                var btn = $('<a href="/certificates/certificate/id/' + row.id + '" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-log-in"></i></a>');
-                btn.bind('click', function () {
-                    console.info(JSON.stringify(row));
-                    return false;
-                })
-                return btn;
-            }
             $('#certificates').tablegrid({
                 title: "{:L('CERTDIRECT')}",
                 buttons: [
@@ -28,6 +23,7 @@
                         }
                     }
                 ],
+                toolbar: '#toolbar',
                 Class: 'table table-striped table-bordered table-hover table-condensed',
                 pagination: true, //是否分页
                 pagesize: [5, 5, 10, 25, 50, 100],
@@ -39,7 +35,7 @@
                     {field: 'step', label: '状态', width: 100, center: true, formatter: certstatus},
                     {field: 'createat', label: '创建时间', width: 100, center: true, formatter: timestampformat},
                     {field: 'downstreams', label: '相关信息', width: 300, formatter: downstreams},
-                    {field: 'certyear', label: '涵盖年份', width: 100, center: true, formatter: function (val, index, row) {
+                    {field: 'certyear', label: '涵盖年[月]', width: 100, center: true, formatter: function (val, index, row) {
                             if (row.certmonth != 0) {
                                 return val + ' [ ' + row.certmonth + ' ] ';
                             }
@@ -47,7 +43,10 @@
                         }
                     },
                     {field: 'view', label: '物质', width: 50, center: true, formatter: certcard},
-                    {field: 'oper', label: '查看', width: 50, center: true, formatter: formatter},
+                    {field: 'oper', label: '查看', width: 50, center: true, formatter: function (val, index, row) {
+                            return '<a href="/certificates/certificate/id/' + row.id + '" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-log-in"></i></a>'
+                        }
+                    },
                 ],
                 callback: function () {
                     $('.main-show').perfectScrollbar('update');
