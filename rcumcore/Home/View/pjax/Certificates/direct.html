@@ -1,7 +1,9 @@
 <if condition="$pjax"><title>{$title}</title></if>
 <div id="main">
     <ol class="breadcrumb">
-        <li class="active">{:L('CERTIFICATES')}</li>
+        <li><a href="/">Dashboard</a></li>
+        <li><a href="/Certificates">{:L('CERTIFICATES')}</a></li>
+        <li class="active">{:L('CERTDIRECT')}</li>
     </ol>
     <div class="main-show">
         <div class="container-fluid">
@@ -19,7 +21,7 @@
                 return btn;
             }
             $('#certificates').tablegrid({
-                title: "{:L('CERTIFICATES')}",
+                title: "{:L('CERTDIRECT')}",
                 buttons: [
                     {name: '', btnClass: 'btn-link glyphicon glyphicon-refresh', action: function () {
                             $('#certificates').tablegrid('reload');
@@ -30,13 +32,12 @@
                 pagination: true, //是否分页
                 pagesize: [5, 5, 10, 25, 50, 100],
                 responsive: true,
-                href: "/{$Think.CONTROLLER_NAME}/{$Think.ACTION_NAME}",
+                href: "/Certificates/direct",
                 paginationBtns: 1, //左右最多各显示多少个按钮
                 columns: [
                     {field: 'certno', label: '编号', width: 100, center: true, nowrap: true},
                     {field: 'step', label: '状态', width: 100, center: true, formatter: certstatus},
                     {field: 'createat', label: '创建时间', width: 100, center: true, formatter: timestampformat},
-                    {field: 'certtype', label: '类型', width: 100, center: true, formatter: certtype},
                     {field: 'downstreams', label: '相关信息', width: 300, formatter: downstreams},
                     {field: 'certyear', label: '涵盖年份', width: 100, center: true, formatter: function (val, index, row) {
                             if (row.certmonth != 0) {
