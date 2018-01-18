@@ -24,9 +24,9 @@ a,a:hover,a:active,a:link,a:visited{
     min-height:40px;
     width: 100%;
     background: #368ee0;
-    position: fixed;
+/*    position: fixed;
     top: 0;
-    left: 0;
+    left: 0;*/
     z-index: 1000;
 }
 .navigation>.container-fluid>*{
@@ -153,7 +153,7 @@ a,a:hover,a:active,a:link,a:visited{
         border-bottom: 1px solid #368ee0;
     }
     .navigation .dropdown .dropdown-menu {
-        position: static;
+/*        position: static;*/
         background: #1b67af;
         float: none;
         border:0;
@@ -277,10 +277,10 @@ a,a:hover,a:active,a:link,a:visited{
     }
 }
 .sidenav{
-    position:fixed;
-    width:215px;
+/*    position:fixed;
     top:40px;
-    left:0;
+    left:0;*/
+    width:215px;
     bottom:0;
     background: #eee;
     z-index: 999;
@@ -352,9 +352,9 @@ a,a:hover,a:active,a:link,a:visited{
     overflow: hidden;
 }
 .sidenav .subnav .subnav-title .toggle-subnav i {
-    position: absolute;
+/*    position: absolute;
     left: 10px;
-    top: 6px;
+    top: 6px;*/
     display: none;
 }
 .sidenav .subnav .subnav-title .toggle-subnav:hover {
@@ -400,10 +400,10 @@ a,a:hover,a:active,a:link,a:visited{
     }
 }
 #page-header{
-    position:fixed;
+/*    position:fixed;
     top:40px;
+    height: 70px;*/
     margin: 0;
-    height: 70px;
     overflow: hidden;
     width: 100%;
     padding:5px 0;
@@ -488,7 +488,6 @@ a,a:hover,a:active,a:link,a:visited{
     overflow: auto;
     padding: 5px;
     border-radius: 5px;
-    height: 200px;
 }
 @media(max-width:992px) {
     #main .main-show{

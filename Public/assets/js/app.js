@@ -127,12 +127,12 @@ function adjustment() {
     var pageHeadH = $('.page-header').outerHeight(true);
     var breadcrumbH = $('.breadcrumb').outerHeight(true);
     if (isComputer()) {
-        $('body').attr('scroll', 'no');
-        $('.sidenav').height(winH - mainNavH);
-        $('.main-area').width(winW - sideNavW - 10);
-        $('.page-header').width(winW - sideNavW - 10);
-        $('.sidenav').perfectScrollbar();
-        $('.main-show').height(winH - mainNavH - pageHeadH - breadcrumbH - 25).perfectScrollbar();
+        //$('body').attr('scroll', 'no');
+        //$('.sidenav').height(winH - mainNavH);
+        //$('.main-area').width(winW - sideNavW - 10);
+        //$('.page-header').width(winW - sideNavW - 10);
+        //$('.sidenav').perfectScrollbar();
+        //$('.main-show').height(winH - mainNavH - pageHeadH - breadcrumbH - 25).perfectScrollbar();
     } else {
         $('.sidenav').height('auto');
     }
